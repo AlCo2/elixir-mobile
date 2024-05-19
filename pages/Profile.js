@@ -1,8 +1,14 @@
 import { View } from 'react-native';
 import { Avatar, Button, Icon, IconButton, Text, TextInput } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Login from './Login';
 
 const Profile = () => {
+
+    if (true)
+    {
+        return <Login/>
+    }
   return (
     <SafeAreaView>
         <View style={{flexDirection:'row', justifyContent:'space-between', marginHorizontal:20, alignItems:'center'}}>

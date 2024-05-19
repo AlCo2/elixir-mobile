@@ -7,6 +7,7 @@ import { Card, List, PaperProvider, Paragraph, Title } from 'react-native-paper'
 import Home from './pages/Home';
 import ButtomNav from './components/ButtomNav';
 import Product from './pages/Product';
+import Register from './pages/Register';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -19,6 +20,7 @@ export default function App() {
         <Stack.Navigator>
           <Stack.Screen options={{headerShown:false}} name="Home" component={ButtomNav} />
           <Stack.Screen options={{headerTitle:'', headerTransparent:true, headerBackTitleVisible:false}} name="Product" component={Product} />
+          <Stack.Screen options={{headerTitle:'', headerTransparent:true, headerBackTitleVisible:false}} name="Register" component={Register} />
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>
