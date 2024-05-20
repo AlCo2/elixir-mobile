@@ -12,17 +12,35 @@ const Register = () => {
             <Text variant='displaySmall'>Register</Text>
         </View>
         <View style={{margin:20, gap:10}}>
-            <View style={{gap:10}}>
-                <Text>Email</Text>
-                <TextInput mode='outlined'/>
+            <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                <View style={{width:'48%'}}>
+                    <Text>FirstName</Text>
+                    <TextInput mode='outlined'/>
+                </View>
+                <View style={{width:'48%'}}>
+                    <Text>LastName</Text>
+                    <TextInput mode='outlined'/>
+                </View>
             </View>
             <View style={{gap:10}}>
                 <Text>Password</Text>
                 <TextInput mode='outlined' secureTextEntry={true}/>
             </View>
+            <View style={{gap:10}}>
+                <Text>Confirm Password</Text>
+                <TextInput mode='outlined' secureTextEntry={true}/>
+            </View>
+            <View style={{gap:10}}>
+                <Text>Phone</Text>
+                <TextInput mode='outlined'/>
+            </View>
+            <View style={{gap:10}}>
+                <Text>Address</Text>
+                <TextInput mode='outlined'/>
+            </View>
         </View>
         <View style={{margin:20}}>
-            <Button labelStyle={{color:'white'}} mode="contained-tonal" style={{borderRadius:5, backgroundColor:'#fa3b7e'}} onPress={() => console.log('Pressed')}>
+            <Button labelStyle={{color:'white'}} mode="contained" style={{borderRadius:5, backgroundColor:'#fa3b7e'}} onPress={() => console.log('Pressed')}>
                 Register
             </Button>
         </View>

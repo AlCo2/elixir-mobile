@@ -3,9 +3,17 @@ import { Avatar, Button, Icon, IconButton, Text, TextInput } from 'react-native-
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Login from './Login';
 
+const user = {
+    firstname:'abdou',
+    lastname:'lahboub',
+    email:'abdou@gmail.com',
+    phone:'065544433',
+    address:'hayNahda, 172'
+}
+
 const Profile = () => {
 
-    if (true)
+    if (!user)
     {
         return <Login/>
     }
@@ -26,7 +34,7 @@ const Profile = () => {
             </View>
         </View>
         <View style={{alignItems:'center', marginVertical:10}}>
-            <Text variant='titleMedium' style={{fontWeight:'600'}}>Abdou Lahboub</Text>
+            <Text variant='titleMedium' style={{fontWeight:'600'}}>{user.firstname + ' ' + user.lastname}</Text>
         </View>
         <View style={{marginHorizontal:20, marginTop:20}}>
             <Text variant='titleMedium' style={{fontWeight:'bold'}}>User Info</Text>
@@ -34,11 +42,19 @@ const Profile = () => {
         <View style={{margin:20}}>
             <View style={{borderWidth:1, borderTopEndRadius:5, borderTopStartRadius:5,flexDirection:'row', alignItems:'center', padding:15, gap:5, opacity:0.4,}}>
                 <Icon size={20} source={'account-outline'}/>
-                <Text variant='bodyLarge'>Abdou Lahboub</Text>
+                <Text variant='bodyLarge'>{user.firstname + ' ' + user.lastname}</Text>
             </View>
             <View style={{borderWidth:1, borderTopWidth:0, flexDirection:'row', alignItems:'center', padding:15, gap:5, opacity:0.4}}>
                 <Icon size={20} source={'email-outline'}/>
-                <Text variant='bodyLarge'>abdou@gmail.com</Text>
+                <Text variant='bodyLarge'>{user.email}</Text>
+            </View>
+            <View style={{borderWidth:1, borderTopWidth:0, flexDirection:'row', alignItems:'center', padding:15, gap:5, opacity:0.4}}>
+                <Icon size={20} source={'phone-outline'}/>
+                <Text variant='bodyLarge'>{user.phone}</Text>
+            </View>
+            <View style={{borderWidth:1, borderTopWidth:0, flexDirection:'row', alignItems:'center', padding:15, gap:5, opacity:0.4}}>
+                <Icon size={20} source={'home-outline'}/>
+                <Text variant='bodyLarge'>{user.address}</Text>
             </View>
             <View style={{borderWidth:1, borderTopWidth:0, borderBottomLeftRadius:5, borderBottomRightRadius:5,flexDirection:'row', alignItems:'center', padding:15, gap:5, opacity:0.4}}>
                 <Icon size={20} source={'key-variant'}/>

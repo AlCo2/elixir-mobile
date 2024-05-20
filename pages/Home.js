@@ -3,9 +3,45 @@ import { Badge, Card, Chip, IconButton, MD3Colors, Searchbar, Text } from "react
 import { SafeAreaView } from "react-native-safe-area-context";
 import parfum from '../assets/parfum.png';
 import ProductCard from "../components/ProductCard";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import PromotionProductCard from "../components/PromotionProductCard";
 
+
+const categories = ['Clocks', 'Lamps', 'Paintains', 'Sofa', 'House'];
 
 const Home = () => {
+    const [categories, setCategories] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState(1);
+    const [promotion, setPromotion] = useState([]);
+    const [popular, setPopular] = useState([]);
+    
+    async function fetchCategories()
+    {
+        const response = await axios.get("http://192.168.1.104:8000/api/categories");
+        if (response.status == 200)
+            setCategories(response.data);
+    }
+    async function fetchPromotion()
+    {
+        const response = await axios.get("http://192.168.1.104:8000/api/promotion");
+        if (response.status == 200)
+            setPromotion(response.data);
+    }
+    
+    async function fetchPopular()
+    {
+        const response = await axios.get("http://192.168.1.104:8000/api/popular");
+        if (response.status == 200)
+            setPopular(response.data);
+    }
+    
+    useEffect(()=>{
+        fetchCategories();
+        fetchPromotion();
+        fetchPopular();
+    }, []);
+
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={{backgroundColor:'#f5f5f5'}}>
         <SafeAreaView style={{flex:1,backgroundColor:'#f5f5f5'}}>
@@ -33,35 +69,45 @@ const Home = () => {
                 />
             </View>
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{margin:10, marginTop:20, marginBottom:25, maxHeight:40}}>
-                <View style={styles.scrollElement}>
-                    <Chip style={{backgroundColor:'black'}} textStyle={{color:'white'}} onPress={() => console.log('Pressed')}>Clocks</Chip>
-                </View>
-                <View style={styles.scrollElement}>
-                    <Chip style={{backgroundColor:'white'}} textStyle={{color:'black', opacity:0.4}} onPress={() => console.log('Pressed')}>Lamps</Chip>
-                </View>
-                <View style={styles.scrollElement}>
-                    <Chip style={{backgroundColor:'white'}} textStyle={{color:'black', opacity:0.4}} onPress={() => console.log('Pressed')}>Paintaing</Chip>
-                </View>
-                <View style={styles.scrollElement}>
-                    <Chip style={{backgroundColor:'white'}} textStyle={{color:'black', opacity:0.4}} onPress={() => console.log('Pressed')}>Sofa</Chip>
-                </View>
-                <View style={styles.scrollElement}>
-                    <Chip style={{backgroundColor:'white'}} textStyle={{color:'black', opacity:0.4}} onPress={() => console.log('Pressed')}>Sofa</Chip>
-                </View>
+                {categories.length>0?
+                 categories.map((category)=>(
+                    <View key={category.id} style={styles.scrollElement}>
+                        <Chip style={{backgroundColor:category.name==selectedCategory?'black':'white'}} textStyle={{color:category.name==selectedCategory?'white':'black'}} onPress={() => setSelectedCategory(category.name)}>{category.name}</Chip>
+                    </View>
+                ))
+                :
+                null
+                }
             </ScrollView>
             <View style={styles.newArrival}>
                 <Text variant="displaySmall" style={styles.newArrivalText}>New{"\n"}Arrivals</Text>
                 <Image style={styles.newArrivalImage} source={parfum}/>
             </View>
             <View style={{margin:20, flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
+                <Text variant="titleLarge" style={{fontWeight:'bold'}}>promotions</Text>
+                <Text variant="bodyMedium" style={{color:'#faaea6', fontWeight:'600'}}>See All</Text>
+            </View>
+            <View style={{marginHorizontal:10, flexDirection:'row', gap:10, flexWrap:'wrap'}}>
+                {promotion.length>0?
+                    promotion.map((promo)=>(
+                    <PromotionProductCard key={promo.id} promotion={promo}/>
+                ))
+                :
+                <Text style={{textAlign:'center',width:'100%'}}>There is no product Available</Text>
+                }
+            </View>
+            <View style={{margin:20, flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
                 <Text variant="titleLarge" style={{fontWeight:'bold'}}>Popular Products</Text>
                 <Text variant="bodyMedium" style={{color:'#faaea6', fontWeight:'600'}}>See All</Text>
             </View>
             <View style={{marginHorizontal:10, flexDirection:'row', gap:10, flexWrap:'wrap'}}>
-                <ProductCard title={'Ameer Al Oudh Intense Oud'} price={'199.00'} image={'https://parfumstore.ma/wp-content/uploads/2024/04/ameer-al-oudh-intense-oud-lattafa-prix-au-maroc.webp'}/>
-                <ProductCard title={'Asad Lattafa'} price={'239.00'} image={'https://parfumstore.ma/wp-content/uploads/2024/04/Lattafa-Asad-prix-maroc.webp'}/>
-                <ProductCard title={'I Am The King 100ml'} price={'189.00'} image={'https://parfumstore.ma/wp-content/uploads/2024/04/i-am-the-king-ana-al-malik-100ml-pour-homme.webp'}/>
-                <ProductCard title={'Badee Al Oud 100ml'} price={'280.00'} image={'https://parfumstore.ma/wp-content/uploads/2024/04/badee-al-oud-lattafa.jpg-1.webp'}/>
+                {popular.length>0?
+                    popular.map((product)=>(
+                        <ProductCard key={product.id} product={product}/>
+                ))
+                :
+                <Text style={{textAlign:'center',width:'100%'}}>There is no product Available</Text>
+                }
             </View>
         </SafeAreaView>
     </ScrollView>
