@@ -2,17 +2,24 @@ import { View } from 'react-native';
 import { Avatar, Button, Icon, IconButton, Text, TextInput } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Login from './Login';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
-const user = {
-    firstname:'abdou',
-    lastname:'lahboub',
-    email:'abdou@gmail.com',
-    phone:'065544433',
-    address:'hayNahda, 172'
-}
 
 const Profile = () => {
-
+    const [user, setUser] = useState(null);
+    async function fetchAuthUser(){
+        const response = await axios.get('http://192.168.1.104:8000/api/user')
+        .catch((error)=>{
+            if (error.response.status == 401)
+                setUser(null);
+        });
+        if (response && response.status == 200)
+            setUser(response.data);
+    }
+    useEffect(()=>{
+        fetchAuthUser();
+    }, [])
     if (!user)
     {
         return <Login/>

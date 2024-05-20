@@ -6,6 +6,7 @@ import ButtomNav from './components/ButtomNav';
 import Product from './pages/Product';
 import Register from './pages/Register';
 import PromotionProduct from './pages/PromotionProduct';
+import Store from './pages/Store';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -18,6 +19,7 @@ export default function App() {
         <Stack.Navigator>
           <Stack.Screen options={{headerShown:false}} name="Home" component={ButtomNav} />
           <Stack.Screen options={{headerTitle:'', headerTransparent:true, headerBackTitleVisible:false}} name="Product" component={Product} />
+          <Stack.Screen options={{headerTitle:'', headerTransparent:true, headerBackTitleVisible:false}} name="Store" component={Store} />
           <Stack.Screen options={{headerTitle:'', headerTransparent:true, headerBackTitleVisible:false}} name="PromotionProduct" component={PromotionProduct} />
           <Stack.Screen options={{headerTitle:'', headerTransparent:true, headerBackTitleVisible:false}} name="Register" component={Register} />          
         </Stack.Navigator>

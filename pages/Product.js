@@ -1,7 +1,6 @@
 import React from 'react'
 import { Image, ScrollView, View } from 'react-native';
 import { Button, Chip, Text } from 'react-native-paper';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Product = ({route}) => {
     const { product } = route.params;

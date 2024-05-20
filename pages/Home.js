@@ -1,4 +1,4 @@
-import { Image, ScrollView, StyleSheet, View } from "react-native";
+import { Image, Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { Badge, Card, Chip, IconButton, MD3Colors, Searchbar, Text } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import parfum from '../assets/parfum.png';
@@ -6,11 +6,13 @@ import ProductCard from "../components/ProductCard";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import PromotionProductCard from "../components/PromotionProductCard";
+import { useNavigation } from "@react-navigation/native";
 
 
 const categories = ['Clocks', 'Lamps', 'Paintains', 'Sofa', 'House'];
 
 const Home = () => {
+    const navigation = useNavigation();
     const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState(1);
     const [promotion, setPromotion] = useState([]);
@@ -85,7 +87,9 @@ const Home = () => {
             </View>
             <View style={{margin:20, flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
                 <Text variant="titleLarge" style={{fontWeight:'bold'}}>promotions</Text>
-                <Text variant="bodyMedium" style={{color:'#faaea6', fontWeight:'600'}}>See All</Text>
+                <Pressable onPress={()=>navigation.navigate('Store', {data:'promotions'})}>
+                    <Text variant="bodyMedium" style={{color:'#faaea6', fontWeight:'600'}}>See All</Text>
+                </Pressable>
             </View>
             <View style={{marginHorizontal:10, flexDirection:'row', gap:10, flexWrap:'wrap'}}>
                 {promotion.length>0?
@@ -98,7 +102,9 @@ const Home = () => {
             </View>
             <View style={{margin:20, flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
                 <Text variant="titleLarge" style={{fontWeight:'bold'}}>Popular Products</Text>
-                <Text variant="bodyMedium" style={{color:'#faaea6', fontWeight:'600'}}>See All</Text>
+                <Pressable onPress={()=>navigation.navigate('Store', {data:'products'})}>
+                    <Text variant="bodyMedium" style={{color:'#faaea6', fontWeight:'600'}}>See All</Text>
+                </Pressable>
             </View>
             <View style={{marginHorizontal:10, flexDirection:'row', gap:10, flexWrap:'wrap'}}>
                 {popular.length>0?
