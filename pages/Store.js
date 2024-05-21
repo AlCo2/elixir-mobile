@@ -6,6 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import ProductCard from "../components/ProductCard";
 import PromotionProduct from "./PromotionProduct";
 import PromotionProductCard from "../components/PromotionProductCard";
+import { ip } from "../utils/const";
 
 const Store = ({ route }) => {
     const { data } = route.params;
@@ -14,7 +15,7 @@ const Store = ({ route }) => {
 
     async function fetchProducts()
     {
-        const response = await axios.get("http://192.168.1.104:8000/api/"+data).catch((error)=>setLoading(false));
+        const response = await axios.get(`http://${ip}:8000/api/`+data).catch((error)=>setLoading(false));
         if (response && response.status == 200)
             setProducts(response.data);
         setLoading(false);

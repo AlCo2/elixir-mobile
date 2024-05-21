@@ -1,15 +1,17 @@
 import { Image, View } from 'react-native';
 import { IconButton, Text } from 'react-native-paper';
 import { deleteFromCart } from '../utils/deleteFromCart';
+import { CartContext } from '../context/cartContext';
+import { useContext } from 'react';
 
-const CartItem = ({product, Q, products, setProducts, setTotal, total}) => {
+const CartItem = ({product}) => {
+  const { cartProducts, setCartProducts } = useContext(CartContext);
   function deleteItem(){
     deleteFromCart(product.id);
-    let temp = [...products];
+    let temp = [...cartProducts];
     let index = temp.indexOf(product);
     temp.splice(index, 1);
-    setProducts(temp);
-    setTotal(total - (product.price * Q));
+    setCartProducts(temp);
   }
   return (
     <View style={{flexDirection:'row', backgroundColor:'white', marginHorizontal:10, borderRadius:10, justifyContent:'space-between', alignItems:'center'}}>
@@ -19,7 +21,7 @@ const CartItem = ({product, Q, products, setProducts, setTotal, total}) => {
         </View>
         <View style={{margin:10, gap:10, width:'50%'}}>
             <Text variant='titleMedium' style={{fontWeight:'bold'}}>{product.title}</Text>
-            <Text variant='bodyMedium' style={{color:'#faaea6', fontWeight:'bold'}}>{product.price * Q}DH</Text>
+            <Text variant='bodyMedium' style={{color:'#faaea6', fontWeight:'bold'}}>{product.price}DH</Text>
         </View>
       </View>
       <View>

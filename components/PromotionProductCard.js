@@ -1,13 +1,21 @@
 import { useNavigation } from '@react-navigation/native';
-import React from 'react'
+import React, { useContext } from 'react'
 import { Pressable, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Card, IconButton, Text } from 'react-native-paper';
 import { addToCart } from '../utils/addToCart';
+import { CartContext } from '../context/cartContext';
 
 const PromotionProductCard = ({promotion}) =>{
     const navigation = useNavigation();
+    const { cartProducts, setCartProducts } = useContext(CartContext);
     const getProduct = () =>{
         navigation.navigate('PromotionProduct', {promotion:promotion})
+    }
+    function add()
+    {
+        if(!cartProducts.includes(promotion.product))
+            setCartProducts(cartProducts=>[promotion.product, ...cartProducts]);
+        addToCart(promotion.product.id)
     }
     return (
         <Card mode='contained' style={styles.PromotionproductCard}>
@@ -28,7 +36,7 @@ const PromotionProductCard = ({promotion}) =>{
                         iconColor={"white"}
                         style={{backgroundColor:'black', borderRadius:10}}
                         size={15}
-                        onPress={() => addToCart(promotion.product.id)}
+                        onPress={add}
                     />
                 </View>
             </Card.Content>

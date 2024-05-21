@@ -1,4 +1,5 @@
 import * as SecureStore from 'expo-secure-store';
+
 export const addToCart = (product_id) =>{
     let cart = SecureStore.getItem('cart');
     if (!cart)

@@ -7,21 +7,26 @@ import Product from './pages/Product';
 import Register from './pages/Register';
 import PromotionProduct from './pages/PromotionProduct';
 import Store from './pages/Store';
+import { createContext, useState } from 'react';
+import { CartContext } from './context/cartContext';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  const [cartProducts, setCartProducts] = useState([]);
   return (
-    <PaperProvider>
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen options={{headerShown:false}} name="Home" component={ButtomNav} />
-          <Stack.Screen options={{headerTitle:'', headerTransparent:true, headerBackTitleVisible:false}} name="Product" component={Product} />
-          <Stack.Screen options={{headerTitle:'', headerTransparent:true, headerBackTitleVisible:false}} name="Store" component={Store} />
-          <Stack.Screen options={{headerTitle:'', headerTransparent:true, headerBackTitleVisible:false}} name="PromotionProduct" component={PromotionProduct} />
-          <Stack.Screen options={{headerTitle:'', headerTransparent:true, headerBackTitleVisible:false}} name="Register" component={Register} />          
-        </Stack.Navigator>
-      </NavigationContainer>
-    </PaperProvider>
+    <CartContext.Provider value={{cartProducts:cartProducts, setCartProducts:setCartProducts }}>
+      <PaperProvider>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen options={{headerShown:false}} name="Home" component={ButtomNav} />
+            <Stack.Screen options={{headerTitle:'', headerTransparent:true, headerBackTitleVisible:false}} name="Product" component={Product} />
+            <Stack.Screen options={{headerTitle:'', headerTransparent:true, headerBackTitleVisible:false}} name="Store" component={Store} />
+            <Stack.Screen options={{headerTitle:'', headerTransparent:true, headerBackTitleVisible:false}} name="PromotionProduct" component={PromotionProduct} />
+            <Stack.Screen options={{headerTitle:'', headerTransparent:true, headerBackTitleVisible:false}} name="Register" component={Register} />          
+          </Stack.Navigator>
+        </NavigationContainer>
+      </PaperProvider>
+    </CartContext.Provider>
   );
 }

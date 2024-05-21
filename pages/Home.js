@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import PromotionProductCard from "../components/PromotionProductCard";
 import { useNavigation } from "@react-navigation/native";
+import { ip } from "../utils/const";
 
 const categories = ['Clocks', 'Lamps', 'Paintains', 'Sofa', 'House'];
 
@@ -19,20 +20,20 @@ const Home = () => {
     
     async function fetchCategories()
     {
-        const response = await axios.get("http://192.168.1.104:8000/api/categories");
+        const response = await axios.get(`http://${ip}:8000/api/categories`);
         if (response.status == 200)
             setCategories(response.data);
     }
     async function fetchPromotion()
     {
-        const response = await axios.get("http://192.168.1.104:8000/api/promotion");
+        const response = await axios.get(`http://${ip}:8000/api/promotion`);
         if (response.status == 200)
             setPromotion(response.data);
     }
     
     async function fetchPopular()
     {
-        const response = await axios.get("http://192.168.1.104:8000/api/popular");
+        const response = await axios.get(`http://${ip}:8000/api/popular`);
         if (response.status == 200)
             setPopular(response.data);
     }
