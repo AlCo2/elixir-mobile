@@ -19,11 +19,7 @@ const PromotionProduct = ({route}) => {
         <Image style={{height:400, width:'100%'}} source={{uri:promotion.product.images[0].url}}/>
       </View>
       <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', margin:20}}>
-        <Text variant='titleLarge' style={{fontWeight:'bold', width:'60%'}}>{promotion.product.title}</Text>
-        <View>
-          <Text variant='titleSmall' style={{color:'red', fontWeight:'bold', textDecorationLine:'line-through', textAlign:'right'}}>{promotion.product.price}DH</Text>
-          <Text variant='titleMedium' style={{color:'#faaea6', fontWeight:'bold'}}>{promotion.promotion_price}DH</Text>
-        </View>
+        <Text variant='titleLarge' style={{fontWeight:'bold', width:'60%'}}>{product.promotion.product.title}</Text>
       </View>
       <View style={{marginHorizontal:20}}>
         <Text variant='bodyMedium' style={{opacity:0.7}}>

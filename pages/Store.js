@@ -4,8 +4,6 @@ import { ScrollView, View } from "react-native";
 import { ActivityIndicator, Button, Searchbar, Text } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ProductCard from "../components/ProductCard";
-import PromotionProduct from "./PromotionProduct";
-import PromotionProductCard from "../components/PromotionProductCard";
 import { ip } from "../utils/const";
 
 const Store = ({ route }) => {
@@ -43,9 +41,6 @@ const Store = ({ route }) => {
         <View style={{marginHorizontal:10, flexDirection:'row', gap:10, flexWrap:'wrap'}}>
             {products.length>0?
                 products.map((product)=>(
-                    data=='promotions'?
-                    <PromotionProductCard key={product.id} promotion={product}/>
-                    :
                     <ProductCard key={product.id} product={product}/>
             ))
             :

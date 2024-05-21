@@ -6,11 +6,20 @@ import { CartContext } from '../context/cartContext';
 
 const Product = ({route}) => {
     const { product } = route.params;
-    const { cartProducts, setCartProducts } = useContext(CartContext);
+    const { cartProducts, setCartProducts, totalPrice, setTotalPrice, cartQ, setCartQ } = useContext(CartContext);
     function add()
     {
+        const temp = cartQ;
         if(!cartProducts.includes(product))
-            setCartProducts(cartProducts=>[product, ...cartProducts]);
+        {
+            setCartProducts(cartProducts=>[...cartProducts, product]);
+            temp[product.id] = 1;
+        }
+        else
+            temp[product.id] += 1;
+        setCartQ(temp);
+        const price = product.promotion?product.promotion.promotion_price:product.price;
+        setTotalPrice(totalPrice + price);
         addToCart(product.id)
     }
   return (
@@ -20,7 +29,14 @@ const Product = ({route}) => {
       </View>
       <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', margin:20}}>
         <Text variant='titleLarge' style={{fontWeight:'bold', width:'60%'}}>{product.title}</Text>
-        <Text variant='titleMedium' style={{color:'#faaea6', fontWeight:'bold'}}>{product.price}DH</Text>
+        {product.promotion?
+          <View>
+            <Text variant='titleSmall' style={{color:'red', fontWeight:'bold', textDecorationLine:'line-through', textAlign:'right'}}>{product.price}DH</Text>
+            <Text variant='titleMedium' style={{color:'#faaea6', fontWeight:'bold'}}>{product.promotion.promotion_price}DH</Text>
+          </View>
+          :
+          <Text variant='titleMedium' style={{color:'#faaea6', fontWeight:'bold'}}>{product.price}DH</Text>
+        }
       </View>
       <View style={{marginHorizontal:20}}>
         <Text variant='bodyMedium' style={{opacity:0.7}}>

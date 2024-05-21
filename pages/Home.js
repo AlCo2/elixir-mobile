@@ -5,7 +5,6 @@ import parfum from '../assets/parfum.png';
 import ProductCard from "../components/ProductCard";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import PromotionProductCard from "../components/PromotionProductCard";
 import { useNavigation } from "@react-navigation/native";
 import { ip } from "../utils/const";
 
@@ -93,8 +92,8 @@ const Home = () => {
             </View>
             <View style={{marginHorizontal:10, flexDirection:'row', gap:10, flexWrap:'wrap'}}>
                 {promotion.length>0?
-                    promotion.map((promo)=>(
-                    <PromotionProductCard key={promo.id} promotion={promo}/>
+                    promotion.map((product)=>(
+                    <ProductCard key={product.id} product={product}/>
                 ))
                 :
                 <Text style={{textAlign:'center',width:'100%'}}>There is no product Available</Text>

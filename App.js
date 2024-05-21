@@ -14,8 +14,10 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [cartProducts, setCartProducts] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [cartQ, setCartQ] = useState({});
   return (
-    <CartContext.Provider value={{cartProducts:cartProducts, setCartProducts:setCartProducts }}>
+    <CartContext.Provider value={{cartProducts:cartProducts, setCartProducts:setCartProducts, totalPrice:totalPrice, setTotalPrice:setTotalPrice, cartQ:cartQ, setCartQ:setCartQ }}>
       <PaperProvider>
         <NavigationContainer>
           <Stack.Navigator>
