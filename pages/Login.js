@@ -2,29 +2,44 @@ import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import React, { useState } from 'react'
 import { TouchableOpacity, View } from 'react-native';
-import { Button, Text, TextInput } from 'react-native-paper';
+import { ActivityIndicator, Button, Text, TextInput } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import * as SecureStore from 'expo-secure-store';
 
-const Login = () => {
+const Login = ({setUser}) => {
     const navigation = useNavigation();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
 
     async function login()
     {
+        setLoading(true);
         const data = {
             email:email,
             password:password,
         }
         const response = await axios.post('http://192.168.1.104:8000/api/login', data)
         .catch((error)=>{
-            console.log(error.response.status);
+            setLoading(false);
         });
         if (response && response.status == 200)
         {
-            console.log(response.data);
-            
+            SecureStore.setItemAsync('token', response.data);
+            const user = await axios.get('http://192.168.1.104:8000/api/user', {headers: {Authorization: `Bearer ${response.data}`}})
+            .then((response)=>response.data);
+            setUser(user);
+            setLoading(false);
         }
+        setLoading(false);
+    }
+    if (loading)
+    {
+        return (
+            <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
+                <ActivityIndicator animating={true} size={"large"} style={{width:'100%'}}/>
+            </View>   
+        )
     }
   return (
     <SafeAreaView>

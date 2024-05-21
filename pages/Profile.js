@@ -1,28 +1,61 @@
 import { View } from 'react-native';
-import { Avatar, Button, Icon, IconButton, Text, TextInput } from 'react-native-paper';
+import { ActivityIndicator, Avatar, Button, Icon, IconButton, Text, TextInput } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Login from './Login';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import * as SecureStore from 'expo-secure-store';
 
 
 const Profile = () => {
     const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
+    function isUserExist()
+    {
+        const data = SecureStore.getItem('user');
+        if (data)
+        {
+            setUser(JSON.parse(data));
+            return true;
+        }
+        else
+            return false;
+    }
+    function logout()
+    {
+        const token = SecureStore.getItem('token');
+        axios.post('http://192.168.1.104:8000/api/logout', {headers: {Authorization: `Bearer ${token}`}})
+        SecureStore.deleteItemAsync('token');
+        SecureStore.deleteItemAsync('user');
+        setUser(null);
+    }
     async function fetchAuthUser(){
-        const response = await axios.get('http://192.168.1.104:8000/api/user')
+        const token = SecureStore.getItem('token');
+        const response = await axios.get('http://192.168.1.104:8000/api/user', {headers: {Authorization: `Bearer ${token}`}})
         .catch((error)=>{
-            if (error.response.status == 401)
-                setUser(null);
+            setUser(null);
+            setLoading(false);
         });
         if (response && response.status == 200)
+        {
             setUser(response.data);
+            SecureStore.setItemAsync('user',JSON.stringify(response.data));
+        }
+        setLoading(false);
     }
     useEffect(()=>{
-        fetchAuthUser();
+        if (!isUserExist())
+        {
+            fetchAuthUser();
+        }
     }, [])
     if (!user)
     {
-        return <Login/>
+        if (loading)
+            return <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
+                        <ActivityIndicator animating={true} size={"large"} style={{width:'100%'}}/>
+                    </View>
+        return <Login setUser={setUser}/>
     }
   return (
     <SafeAreaView>
@@ -69,7 +102,7 @@ const Profile = () => {
             </View>
         </View>
         <View style={{margin:20}}>
-            <Button icon="logout" labelStyle={{color:'red'}} mode="outlined" style={{borderRadius:5}} onPress={() => console.log('Pressed')}>
+            <Button icon="logout" labelStyle={{color:'red'}} mode="outlined" style={{borderRadius:5}} onPress={logout}>
                 Logout
             </Button>
         </View>
