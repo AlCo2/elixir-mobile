@@ -8,8 +8,6 @@ import Register from './pages/Register';
 import PromotionProduct from './pages/PromotionProduct';
 import Store from './pages/Store';
 
-const Tab = createMaterialBottomTabNavigator();
-
 const Stack = createNativeStackNavigator();
 
 export default function App() {

@@ -8,7 +8,6 @@ import axios from "axios";
 import PromotionProductCard from "../components/PromotionProductCard";
 import { useNavigation } from "@react-navigation/native";
 
-
 const categories = ['Clocks', 'Lamps', 'Paintains', 'Sofa', 'House'];
 
 const Home = () => {

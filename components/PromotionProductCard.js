@@ -2,6 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import React from 'react'
 import { Pressable, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Card, IconButton, Text } from 'react-native-paper';
+import { addToCart } from '../utils/addToCart';
 
 const PromotionProductCard = ({promotion}) =>{
     const navigation = useNavigation();
@@ -27,7 +28,7 @@ const PromotionProductCard = ({promotion}) =>{
                         iconColor={"white"}
                         style={{backgroundColor:'black', borderRadius:10}}
                         size={15}
-                        onPress={() => console.log('Pressed')}
+                        onPress={() => addToCart(promotion.product.id)}
                     />
                 </View>
             </Card.Content>

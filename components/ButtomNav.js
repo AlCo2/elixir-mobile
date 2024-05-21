@@ -1,15 +1,12 @@
 import { useState } from "react";
-import { BottomNavigation, Text } from "react-native-paper";
+import { BottomNavigation } from "react-native-paper";
 import Home from "../pages/Home";
 import Cart from "../pages/Cart";
 import Favourit from "../pages/Favourit";
 import Profile from "../pages/Profile";
 
 
-
-const NotificationsRoute = () => <Text>Notifications</Text>;
-
-const ButtomNav = ({navigation}) => {
+const ButtomNav = ({navigation}) => {    
     const [index, setIndex] = useState(0);
     const [routes] = useState([
         { key: 'home', title: 'Home', focusedIcon: 'home', unfocusedIcon: 'home-outline'},

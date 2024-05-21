@@ -1,6 +1,7 @@
 import React from 'react'
 import { Image, ScrollView, View } from 'react-native';
 import { Button, Chip, Text } from 'react-native-paper';
+import { addToCart } from '../utils/addToCart';
 
 const Product = ({route}) => {
     const { product } = route.params;
@@ -25,7 +26,7 @@ const Product = ({route}) => {
         </View>
       </View>
       <View  style={{margin:20, alignItems:'center'}}>
-          <Button onPress={()=>console.log('addToCart')} style={{backgroundColor:'#faaea6', borderRadius:20, width:'100%'}} labelStyle={{fontSize:20, paddingVertical:10, fontWeight:'bold'}} mode='contained'>Add to Cart</Button>
+          <Button onPress={()=>addToCart(product.id)} style={{backgroundColor:'#faaea6', borderRadius:20, width:'100%'}} labelStyle={{fontSize:20, paddingVertical:10, fontWeight:'bold'}} mode='contained'>Add to Cart</Button>
       </View>
     </ScrollView>
   )
