@@ -5,6 +5,7 @@ import { ScrollView, View } from 'react-native';
 import CartItem from '../components/CartItem';
 import * as SecureStore from 'expo-secure-store';
 import axios from 'axios';
+import { useFocusEffect } from '@react-navigation/native';
 
 const Cart = () => {
   const [cart, setCart] = useState(null);
@@ -20,15 +21,16 @@ const Cart = () => {
       const response = await axios.post('http://192.168.1.104:8000/api/cartproducts', {data:data});
       if (response && response.status == 200)
       {
-        setTotal(response.data.total); 
+        setTotal(response.data.total);
         setProducts(response.data.products);
       }
     }
   }
-
-  useEffect(()=>{
-    fetchProducts();
-  }, [])
+  useFocusEffect(
+    useCallback(() => {
+      fetchProducts();
+    }, [])
+  );
   return (
     <ScrollView style={{backgroundColor:'#f5f5f5'}}>
         <SafeAreaView>
@@ -38,7 +40,7 @@ const Cart = () => {
             <View style={{gap:10}}>
               {products.length>0?
                 products.map(((product)=>(
-                  <CartItem key={product.id} product={product} fetchData={fetchProducts}/>
+                  <CartItem key={product.id} product={product} Q={cart[product.id]} total={total} setTotal={setTotal} products={products} setProducts={setProducts}/>
                 )))
               :
               <Text variant='titleLarge' style={{textAlign:'center'}}>Your Cart is Empty</Text>

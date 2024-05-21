@@ -28,6 +28,7 @@ const Profile = () => {
         SecureStore.deleteItemAsync('token');
         SecureStore.deleteItemAsync('user');
         setUser(null);
+        setLoading(false);
     }
     async function fetchAuthUser(){
         const token = SecureStore.getItem('token');
