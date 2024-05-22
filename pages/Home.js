@@ -47,19 +47,13 @@ const Home = () => {
     <ScrollView showsVerticalScrollIndicator={false} style={{backgroundColor:'#f5f5f5'}}>
         <SafeAreaView style={{flex:1,backgroundColor:'#f5f5f5'}}>
             <View style={styles.header}>
-                <IconButton
-                    icon="menu"
-                    iconColor={MD3Colors.error0}
-                    size={30}
-                    onPress={() => console.log('Pressed')}
-                />
                 <View>
                     <Badge style={{position:'absolute', backgroundColor:'black', right:5, top:5}} size={16}>2</Badge>
                     <IconButton
                         icon="bell"
                         iconColor={'#faaea6'}
                         size={25}
-                        onPress={() => console.log('Pressed')}
+                        onPress={() => navigation.navigate('Notification')}
                     />
                 </View>
             </View>
@@ -122,7 +116,7 @@ const Home = () => {
 const styles = StyleSheet.create({
     header: {
         flexDirection:'row',
-        justifyContent:'space-between',
+        justifyContent:'flex-end',
         paddingHorizontal:10
     },
     scrollElement:{

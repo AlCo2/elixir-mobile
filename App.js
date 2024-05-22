@@ -7,8 +7,9 @@ import Product from './pages/Product';
 import Register from './pages/Register';
 import PromotionProduct from './pages/PromotionProduct';
 import Store from './pages/Store';
-import { createContext, useState } from 'react';
+import { useState } from 'react';
 import { CartContext } from './context/cartContext';
+import Notification from './pages/Notification';
 
 const Stack = createNativeStackNavigator();
 
@@ -24,8 +25,9 @@ export default function App() {
             <Stack.Screen options={{headerShown:false}} name="Home" component={ButtomNav} />
             <Stack.Screen options={{headerTitle:'', headerTransparent:true, headerBackTitleVisible:false}} name="Product" component={Product} />
             <Stack.Screen options={{headerTitle:'', headerTransparent:true, headerBackTitleVisible:false}} name="Store" component={Store} />
+            <Stack.Screen options={{headerTitle:'', headerTransparent:true, headerBackTitleVisible:false}} name="Notification" component={Notification} />
             <Stack.Screen options={{headerTitle:'', headerTransparent:true, headerBackTitleVisible:false}} name="PromotionProduct" component={PromotionProduct} />
-            <Stack.Screen options={{headerTitle:'', headerTransparent:true, headerBackTitleVisible:false}} name="Register" component={Register} />          
+            <Stack.Screen options={{headerTitle:'', headerTransparent:true, headerBackTitleVisible:false}} name="Register" component={Register} />
           </Stack.Navigator>
         </NavigationContainer>
       </PaperProvider>

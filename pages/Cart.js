@@ -7,10 +7,12 @@ import * as SecureStore from 'expo-secure-store';
 import axios from 'axios';
 import { CartContext } from '../context/cartContext';
 import { ip } from '../utils/const';
+import { useNavigation } from '@react-navigation/native';
 
 
 const Cart = () => {
   const { cartProducts, setCartProducts, totalPrice, setTotalPrice, cartQ, setCartQ } = useContext(CartContext);
+  const navigation = useNavigation();
   const fetchProducts = async () => {
     let data = SecureStore.getItem('cart');
     if (data)
@@ -55,7 +57,7 @@ const Cart = () => {
               </>
             :
               <View style={{margin:20, alignItems:'center'}}>
-                  <Button onPress={()=>fetchProducts()} style={{backgroundColor:'#faaea6', borderRadius:10, width:300}} labelStyle={{fontSize:20, paddingVertical:5}} mode='contained'>Go Buy Something</Button>
+                  <Button onPress={()=>navigation.navigate('Store', {data:'products'})} style={{backgroundColor:'#faaea6', borderRadius:10, width:300}} labelStyle={{fontSize:20, paddingVertical:5}} mode='contained'>Go Buy Something</Button>
               </View>
             }
         </SafeAreaView>
