@@ -24,8 +24,9 @@ const Profile = () => {
     }
     function logout()
     {
+        setLoading(true);
         const token = SecureStore.getItem('token');
-        axios.post(`http://${ip}:8000/api/logout`, {headers: {Authorization: `Bearer ${token}`}})
+        axios.post(`http://${ip}:8000/api/logout`, null,{headers: {Authorization: `Bearer ${token}`}}).catch((error)=>console.log(error));
         SecureStore.deleteItemAsync('token');
         SecureStore.deleteItemAsync('user');
         setUser(null);
