@@ -13,7 +13,7 @@ const Store = ({ route }) => {
 
     async function fetchProducts()
     {
-        const response = await axios.get(`http://${ip}:8000/api/`+data).catch((error)=>setLoading(false));
+        const response = await axios.get(`http://${ip}:8000/api/product/${data}/all`).catch((error)=>setLoading(false));
         if (response && response.status == 200)
             setProducts(response.data);
         setLoading(false);
@@ -26,7 +26,7 @@ const Store = ({ route }) => {
     <SafeAreaView>
     <ScrollView>
         <View style={{alignItems:'center', marginTop:10}}>
-            <Text variant="titleLarge" style={{fontWeight:'bold'}}>{data=='promotions'?'Promotions':'Popular Product'}</Text>
+            <Text variant="titleLarge" style={{fontWeight:'bold', textTransform:'capitalize'}}>{data}</Text>
         </View>
         <View style={{alignItems:'center', marginTop:20, marginHorizontal:10}}>
             <Searchbar
@@ -34,7 +34,7 @@ const Store = ({ route }) => {
                 style={{backgroundColor:'white', width:'100%'}}
             />
         </View>
-        <View  style={{marginHorizontal:10, marginVertical:20, justifyContent:'space-between', flexDirection:'row', alignItems:'center'}}>
+        <View style={{marginHorizontal:10, marginVertical:20, justifyContent:'space-between', flexDirection:'row', alignItems:'center'}}>
             <Text variant="titleSmall" style={{opacity:0.6, fontWeight:'bold'}}>{products.length} Product</Text>
             <Button icon={"chevron-down"} contentStyle={{flexDirection:'row-reverse'}} mode="contained-tonal" buttonColor="white">Sort By</Button>
         </View>

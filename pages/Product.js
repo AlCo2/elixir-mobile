@@ -3,6 +3,7 @@ import { Image, ScrollView, View } from 'react-native';
 import { Button, Chip, Text } from 'react-native-paper';
 import { addToCart } from '../utils/addToCart';
 import { CartContext } from '../context/cartContext';
+import { ip } from '../utils/const';
 
 const Product = ({route}) => {
     const { product } = route.params;
@@ -25,7 +26,7 @@ const Product = ({route}) => {
   return (
     <ScrollView>
       <View style={{backgroundColor:'white'}}>
-        <Image style={{height:400, width:'100%'}} source={{uri:product.images[0].url}}/>
+        <Image style={{height:400, width:'100%'}} source={{uri:`http://${ip}:8000${product.images[0].url}`}}/>
       </View>
       <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', margin:20}}>
         <Text variant='titleLarge' style={{fontWeight:'bold', width:'60%'}}>{product.title}</Text>

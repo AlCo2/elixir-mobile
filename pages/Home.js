@@ -12,35 +12,36 @@ const categories = ['Clocks', 'Lamps', 'Paintains', 'Sofa', 'House'];
 
 const Home = () => {
     const navigation = useNavigation();
-    const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState(1);
-    const [promotion, setPromotion] = useState([]);
-    const [popular, setPopular] = useState([]);
-    
-    async function fetchCategories()
+    const [featured, setFeatured] = useState([]);
+    const [manProducts, setManProducts] = useState([]);
+    const [womanProducts, setWomanProducts] = useState([]);
+
+    async function fetchFeatured()
     {
-        const response = await axios.get(`http://${ip}:8000/api/categories`);
+        const response = await axios.get(`http://${ip}:8000/api/product/featured`);
         if (response.status == 200)
-            setCategories(response.data);
-    }
-    async function fetchPromotion()
-    {
-        const response = await axios.get(`http://${ip}:8000/api/promotion`);
-        if (response.status == 200)
-            setPromotion(response.data);
+            setFeatured(response.data);
     }
     
-    async function fetchPopular()
+    async function fetchMan()
     {
-        const response = await axios.get(`http://${ip}:8000/api/popular`);
+        const response = await axios.get(`http://${ip}:8000/api/product/man`);
         if (response.status == 200)
-            setPopular(response.data);
+            setManProducts(response.data);
     }
-    
+
+    async function fetchWoman()
+    {
+        const response = await axios.get(`http://${ip}:8000/api/product/woman`);
+        if (response.status == 200)
+            setWomanProducts(response.data);
+    }
+
     useEffect(()=>{
-        fetchCategories();
-        fetchPromotion();
-        fetchPopular();
+        fetchFeatured();
+        fetchMan();
+        fetchWoman();
     }, []);
 
   return (
@@ -63,30 +64,34 @@ const Home = () => {
                     style={{backgroundColor:'white', width:'100%'}}
                 />
             </View>
-            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{margin:10, marginTop:20, marginBottom:25, maxHeight:40}}>
-                {categories.length>0?
-                 categories.map((category)=>(
-                    <View key={category.id} style={styles.scrollElement}>
-                        <Chip style={{backgroundColor:category.name==selectedCategory?'black':'white'}} textStyle={{color:category.name==selectedCategory?'white':'black'}} onPress={() => setSelectedCategory(category.name)}>{category.name}</Chip>
-                    </View>
-                ))
-                :
-                null
-                }
-            </ScrollView>
             <View style={styles.newArrival}>
                 <Text variant="displaySmall" style={styles.newArrivalText}>New{"\n"}Arrivals</Text>
                 <Image style={styles.newArrivalImage} source={parfum}/>
             </View>
             <View style={{margin:20, flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
-                <Text variant="titleLarge" style={{fontWeight:'bold'}}>promotions</Text>
-                <Pressable onPress={()=>navigation.navigate('Store', {data:'promotions'})}>
+                <Text variant="titleLarge" style={{fontWeight:'bold'}}>Featured Products</Text>
+                <Pressable onPress={()=>navigation.navigate('Store', {data:'featured'})}>
                     <Text variant="bodyMedium" style={{color:'#faaea6', fontWeight:'600'}}>See All</Text>
                 </Pressable>
             </View>
             <View style={{marginHorizontal:10, flexDirection:'row', gap:10, flexWrap:'wrap'}}>
-                {promotion.length>0?
-                    promotion.map((product)=>(
+                {featured.length>0?
+                    featured.map((product)=>(
+                        <ProductCard key={product.id} product={product}/>
+                ))
+                :
+                <Text style={{textAlign:'center',width:'100%'}}>There is no product Available</Text>
+                }
+            </View>
+            <View style={{margin:20, flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
+                <Text variant="titleLarge" style={{fontWeight:'bold'}}>Woman</Text>
+                <Pressable onPress={()=>navigation.navigate('Store', {data:'woman'})}>
+                    <Text variant="bodyMedium" style={{color:'#faaea6', fontWeight:'600'}}>See All</Text>
+                </Pressable>
+            </View>
+            <View style={{marginHorizontal:10, flexDirection:'row', gap:10, flexWrap:'wrap'}}>
+                {womanProducts.length>0?
+                    womanProducts.map((product)=>(
                     <ProductCard key={product.id} product={product}/>
                 ))
                 :
@@ -94,15 +99,15 @@ const Home = () => {
                 }
             </View>
             <View style={{margin:20, flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
-                <Text variant="titleLarge" style={{fontWeight:'bold'}}>Popular Products</Text>
-                <Pressable onPress={()=>navigation.navigate('Store', {data:'products'})}>
+                <Text variant="titleLarge" style={{fontWeight:'bold'}}>Man</Text>
+                <Pressable onPress={()=>navigation.navigate('Store', {data:'man'})}>
                     <Text variant="bodyMedium" style={{color:'#faaea6', fontWeight:'600'}}>See All</Text>
                 </Pressable>
             </View>
             <View style={{marginHorizontal:10, flexDirection:'row', gap:10, flexWrap:'wrap'}}>
-                {popular.length>0?
-                    popular.map((product)=>(
-                        <ProductCard key={product.id} product={product}/>
+                {manProducts.length>0?
+                    manProducts.map((product)=>(
+                    <ProductCard key={product.id} product={product}/>
                 ))
                 :
                 <Text style={{textAlign:'center',width:'100%'}}>There is no product Available</Text>

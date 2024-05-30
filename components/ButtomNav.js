@@ -23,9 +23,10 @@ const ButtomNav = ({navigation}) => {
   return (
     <BottomNavigation
       shifting={true}
-      barStyle={{backgroundColor:'#fa3b7e', height:85}}
+      barStyle={{backgroundColor:'black', height:85}}
       inactiveColor="white"
-      activeIndicatorStyle={{backgroundColor:'white'}}
+      activeColor="white"
+      activeIndicatorStyle={{backgroundColor:'black'}}
       navigationState={{ index, routes }}
       onIndexChange={setIndex}
       renderScene={renderScene}

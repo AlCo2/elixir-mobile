@@ -3,6 +3,7 @@ import { Image, ScrollView, View } from 'react-native';
 import { Button, Chip, Text } from 'react-native-paper';
 import { addToCart } from '../utils/addToCart';
 import { CartContext } from '../context/cartContext';
+import { ip } from '../utils/const';
 
 const PromotionProduct = ({route}) => {
     const { promotion } = route.params;
@@ -16,7 +17,7 @@ const PromotionProduct = ({route}) => {
   return (
     <ScrollView>
       <View style={{backgroundColor:'white'}}>
-        <Image style={{height:400, width:'100%'}} source={{uri:promotion.product.images[0].url}}/>
+        <Image style={{height:400, width:'100%'}} source={{uri:`http://${ip}:8000${product.images[0].url}`}}/>
       </View>
       <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', margin:20}}>
         <Text variant='titleLarge' style={{fontWeight:'bold', width:'60%'}}>{product.promotion.product.title}</Text>
