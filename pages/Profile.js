@@ -5,8 +5,7 @@ import Login from './Login';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
-import { ip } from '../utils/const';
-
+import { API_URL } from '@env';
 
 const Profile = () => {
     const [user, setUser] = useState(null);
@@ -26,7 +25,7 @@ const Profile = () => {
     {
         setLoading(true);
         const token = SecureStore.getItem('token');
-        axios.post(`http://${ip}:8000/api/logout`, null,{headers: {Authorization: `Bearer ${token}`}}).catch((error)=>console.log(error));
+        axios.post(`${API_URL}/api/logout`, null,{headers: {Authorization: `Bearer ${token}`}}).catch((error)=>console.log(error));
         SecureStore.deleteItemAsync('token');
         SecureStore.deleteItemAsync('user');
         setUser(null);
@@ -34,7 +33,7 @@ const Profile = () => {
     }
     async function fetchAuthUser(){
         const token = SecureStore.getItem('token');
-        const response = await axios.get(`http://${ip}:8000/api/user`, {headers: {Authorization: `Bearer ${token}`}})
+        const response = await axios.get(`${API_URL}/api/user`, {headers: {Authorization: `Bearer ${token}`}})
         .catch((error)=>{
             setUser(null);
             setLoading(false);

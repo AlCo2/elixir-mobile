@@ -6,8 +6,8 @@ import CartItem from '../components/CartItem';
 import * as SecureStore from 'expo-secure-store';
 import axios from 'axios';
 import { CartContext } from '../context/cartContext';
-import { ip } from '../utils/const';
 import { useNavigation } from '@react-navigation/native';
+import { API_URL } from '@env';
 
 
 const Cart = () => {
@@ -18,7 +18,7 @@ const Cart = () => {
     if (data)
     {
       data = JSON.parse(data);
-      const response = await axios.post(`http://${ip}:8000/api/cartproducts`, {data:data});
+      const response = await axios.post(`${process.env.API_URL}/api/cartproducts`, {data:data});
       if (response && response.status == 200)
       {
         setTotalPrice(response.data.total);

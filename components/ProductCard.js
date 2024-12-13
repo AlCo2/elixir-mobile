@@ -4,7 +4,7 @@ import { Pressable, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Card, IconButton, Text } from 'react-native-paper';
 import { addToCart } from '../utils/addToCart';
 import { CartContext } from '../context/cartContext';
-import { ip } from '../utils/const';
+import { API_URL } from '@env';
 
 const ProductCard = ({product}) =>{
     const navigation = useNavigation();
@@ -31,7 +31,7 @@ const ProductCard = ({product}) =>{
     return (
         <Card mode='contained' style={styles.productCard}>
             <Pressable onPress={getProduct}>
-            <Card.Cover style={{height:160, width:180}} source={{uri:`http://${ip}:8000${product.images[0].url}`}}/>
+            <Card.Cover style={{height:160, width:180}} source={{uri:`${API_URL}${product.images[0].url}`}}/>
             </Pressable>
             <Card.Content style={{height:'100%'}}>
                 <TouchableOpacity onPress={getProduct}>

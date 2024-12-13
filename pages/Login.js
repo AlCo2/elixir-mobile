@@ -5,7 +5,7 @@ import { TouchableOpacity, View } from 'react-native';
 import { ActivityIndicator, Button, Text, TextInput } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as SecureStore from 'expo-secure-store';
-import { ip } from '../utils/const';
+import { API_URL } from '@env';
 
 const Login = ({setUser}) => {
     const navigation = useNavigation();
@@ -20,14 +20,14 @@ const Login = ({setUser}) => {
             email:email,
             password:password,
         }
-        const response = await axios.post(`http://${ip}:8000/api/login`, data)
+        const response = await axios.post(`${API_URL}/api/login`, data)
         .catch((error)=>{
             setLoading(false);
         });
         if (response && response.status == 200)
         {
             SecureStore.setItemAsync('token', response.data);
-            const user = await axios.get(`http://${ip}:8000/api/user`, {headers: {Authorization: `Bearer ${response.data}`}})
+            const user = await axios.get(`${API_URL}/api/user`, {headers: {Authorization: `Bearer ${response.data}`}})
             .then((response)=>response.data);
             setUser(user);
             setLoading(false);

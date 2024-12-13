@@ -4,16 +4,15 @@ import { ScrollView, View } from "react-native";
 import { ActivityIndicator, Button, Searchbar, Text } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ProductCard from "../components/ProductCard";
-import { ip } from "../utils/const";
+import { API_URL } from '@env';
 
 const Store = ({ route }) => {
     const { data } = route.params;
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
-
     async function fetchProducts()
     {
-        const response = await axios.get(`http://${ip}:8000/api/product/${data}/all`).catch((error)=>setLoading(false));
+        const response = await axios.get(`${API_URL}/api/product/${data}/all`).catch((error)=>setLoading(false));
         if (response && response.status == 200)
             setProducts(response.data);
         setLoading(false);

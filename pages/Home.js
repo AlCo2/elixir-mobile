@@ -6,7 +6,7 @@ import ProductCard from "../components/ProductCard";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
-import { ip } from "../utils/const";
+import { API_URL } from '@env';
 
 const categories = ['Clocks', 'Lamps', 'Paintains', 'Sofa', 'House'];
 
@@ -18,21 +18,21 @@ const Home = () => {
 
     async function fetchFeatured()
     {
-        const response = await axios.get(`http://${ip}:8000/api/product/featured`);
+        const response = await axios.get(`${API_URL}/api/product/featured`);
         if (response.status == 200)
             setFeatured(response.data);
     }
     
     async function fetchMan()
     {
-        const response = await axios.get(`http://${ip}:8000/api/product/man`);
+        const response = await axios.get(`${API_URL}/api/product/man`);
         if (response.status == 200)
             setManProducts(response.data);
     }
 
     async function fetchWoman()
     {
-        const response = await axios.get(`http://${ip}:8000/api/product/woman`);
+        const response = await axios.get(`${API_URL}/api/product/woman`);
         if (response.status == 200)
             setWomanProducts(response.data);
     }
