@@ -1,6 +1,6 @@
 import * as SecureStore from 'expo-secure-store';
 
-export const addQToCart = (product_id) =>{
+export const addQToCart = (product_id, setCartQ) =>{
     let cart = SecureStore.getItem('cart');
     if (!cart)
     {
@@ -15,6 +15,7 @@ export const addQToCart = (product_id) =>{
     else
     {
         cart[product_id] = 1;
-    }    
+    }
+    setCartQ(cart);
     SecureStore.setItem('cart', JSON.stringify(cart));
 }

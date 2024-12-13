@@ -17,7 +17,7 @@ export const CartProvider = ({children}) => {
           cart = JSON.parse(cart);
           const price = (product.promotion?product.promotion.promotion_price:product.price);
           setTotalPrice(totalPrice - (cart[product.id] * price));
-          deleteFromCart(product.id);
+          deleteFromCart(product.id, setCartQ);
           let temp = [...cartProducts];
           let index = temp.indexOf(product);
           temp.splice(index, 1);
@@ -36,10 +36,9 @@ export const CartProvider = ({children}) => {
             }
             else
                 temp[product.id] += 1;
-            setCartQ(temp);
             const price = product.promotion?product.promotion.promotion_price:product.price;
             setTotalPrice(totalPrice + price);
-            addQToCart(product.id)
+            addQToCart(product.id, setCartQ)
         }
     }
     return (
