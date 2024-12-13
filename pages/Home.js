@@ -1,14 +1,11 @@
 import { Image, Pressable, ScrollView, StyleSheet, View } from "react-native";
-import { Badge, Card, Chip, IconButton, MD3Colors, Searchbar, Text } from "react-native-paper";
+import { Badge, IconButton, Searchbar, Text } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import parfum from '../assets/parfum.png';
 import ProductCard from "../components/ProductCard";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
-import { API_URL } from '@env';
-
-const categories = ['Clocks', 'Lamps', 'Paintains', 'Sofa', 'House'];
+import { getFeaturedProducts, getManProducts, getWomanProducts } from "../api/products";
 
 const Home = () => {
     const navigation = useNavigation();
@@ -16,31 +13,19 @@ const Home = () => {
     const [manProducts, setManProducts] = useState([]);
     const [womanProducts, setWomanProducts] = useState([]);
 
-    async function fetchFeatured()
-    {
-        const response = await axios.get(`${API_URL}/api/product/featured`);
-        if (response.status == 200)
-            setFeatured(response.data);
+    async function fetchData(){
+        const featuredResponse = await getFeaturedProducts();
+        const manResponse = await getManProducts();
+        const womanResponse = await getWomanProducts();
+        if (featuredResponse.status == 200)
+            setFeatured(featuredResponse.data);
+        if (featuredResponse.status == 200)
+            setManProducts(manResponse.data);
+        if (featuredResponse.status == 200)
+            setWomanProducts(womanResponse.data);
     }
-    
-    async function fetchMan()
-    {
-        const response = await axios.get(`${API_URL}/api/product/man`);
-        if (response.status == 200)
-            setManProducts(response.data);
-    }
-
-    async function fetchWoman()
-    {
-        const response = await axios.get(`${API_URL}/api/product/woman`);
-        if (response.status == 200)
-            setWomanProducts(response.data);
-    }
-
     useEffect(()=>{
-        fetchFeatured();
-        fetchMan();
-        fetchWoman();
+        fetchData();
     }, []);
 
   return (

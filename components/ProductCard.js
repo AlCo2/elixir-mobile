@@ -2,32 +2,16 @@ import { useNavigation } from '@react-navigation/native';
 import React, { useContext } from 'react'
 import { Pressable, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Card, IconButton, Text } from 'react-native-paper';
-import { addToCart } from '../utils/addToCart';
-import { CartContext } from '../context/cartContext';
 import { API_URL } from '@env';
+import { CartContext } from '../context/cartContext';
 
 const ProductCard = ({product}) =>{
     const navigation = useNavigation();
-    const { cartProducts, setCartProducts, totalPrice, setTotalPrice, cartQ, setCartQ } = useContext(CartContext);
-
+    const { addToCart } = useContext(CartContext);
     const getProduct = () =>{
         navigation.navigate('Product', {product:product})
     }
-    function add()
-    {
-        const temp = cartQ;
-        if(!cartProducts.includes(product))
-        {
-            setCartProducts(cartProducts=>[...cartProducts, product]);
-            temp[product.id] = 1;
-        }
-        else
-            temp[product.id] += 1;
-        setCartQ(temp);
-        const price = product.promotion?product.promotion.promotion_price:product.price;
-        setTotalPrice(totalPrice + price);
-        addToCart(product.id)
-    }
+    
     return (
         <Card mode='contained' style={styles.productCard}>
             <Pressable onPress={getProduct}>
@@ -48,7 +32,7 @@ const ProductCard = ({product}) =>{
                         iconColor={"white"}
                         style={{backgroundColor:'black', borderRadius:10}}
                         size={20}
-                        onPress={add}
+                        onPress={()=>addToCart(product)}
                     />
                 </View>
                 :
@@ -59,7 +43,7 @@ const ProductCard = ({product}) =>{
                         iconColor={"white"}
                         style={{backgroundColor:'black', borderRadius:10}}
                         size={20}
-                        onPress={add}
+                        onPress={()=>addToCart(product)}
                     />
                 </View>
                 }

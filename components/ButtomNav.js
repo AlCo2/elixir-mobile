@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { BottomNavigation } from "react-native-paper";
 import Home from "../pages/Home";
 import Cart from "../pages/Cart";

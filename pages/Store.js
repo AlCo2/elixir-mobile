@@ -1,18 +1,24 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { ScrollView, View } from "react-native";
 import { ActivityIndicator, Button, Searchbar, Text } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ProductCard from "../components/ProductCard";
-import { API_URL } from '@env';
+import { getProducts } from "../api/products";
+
 
 const Store = ({ route }) => {
     const { data } = route.params;
     const [products, setProducts] = useState([]);
+    const [error, setError] = useState(false);
     const [loading, setLoading] = useState(true);
+    
     async function fetchProducts()
     {
-        const response = await axios.get(`${API_URL}/api/product/${data}/all`).catch((error)=>setLoading(false));
+        const response = await getProducts(data).catch((error)=>{
+            setError(true);
+            setLoading(false)
+        }
+        );
         if (response && response.status == 200)
             setProducts(response.data);
         setLoading(false);
@@ -38,15 +44,18 @@ const Store = ({ route }) => {
             <Button icon={"chevron-down"} contentStyle={{flexDirection:'row-reverse'}} mode="contained-tonal" buttonColor="white">Sort By</Button>
         </View>
         <View style={{marginHorizontal:10, flexDirection:'row', gap:10, flexWrap:'wrap'}}>
-            {products.length>0?
-                products.map((product)=>(
-                    <ProductCard key={product.id} product={product}/>
-            ))
-            :
-            loading?
+            {loading?
                 <ActivityIndicator animating={true} size={"large"} style={{width:'100%'}}/>
+            :
+                error?
+                    <Text style={{textAlign:'center',width:'100%', color:'red'}}>Error: an error happened while fetching data</Text>
                 :
-                <Text style={{textAlign:'center',width:'100%'}}>There is no product Available</Text>
+                    products && products.length>0?
+                        products.map((product)=>(
+                            <ProductCard key={product.id} product={product}/>
+                            ))
+                    :
+                        <Text style={{textAlign:'center',width:'100%'}}>There is no product Available</Text>
             }
         </View>
     </ScrollView>

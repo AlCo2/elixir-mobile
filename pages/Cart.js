@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { useContext, useEffect } from 'react'
 import { Button, Text } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView, View } from 'react-native';
@@ -7,8 +7,7 @@ import * as SecureStore from 'expo-secure-store';
 import axios from 'axios';
 import { CartContext } from '../context/cartContext';
 import { useNavigation } from '@react-navigation/native';
-import { API_URL } from '@env';
-
+import { getCartPoroducts } from '../api/products';
 
 const Cart = () => {
   const { cartProducts, setCartProducts, totalPrice, setTotalPrice, cartQ, setCartQ } = useContext(CartContext);
@@ -18,7 +17,7 @@ const Cart = () => {
     if (data)
     {
       data = JSON.parse(data);
-      const response = await axios.post(`${process.env.API_URL}/api/cartproducts`, {data:data});
+      const response = await getCartPoroducts(data);
       if (response && response.status == 200)
       {
         setTotalPrice(response.data.total);
@@ -57,7 +56,7 @@ const Cart = () => {
               </>
             :
               <View style={{margin:20, alignItems:'center'}}>
-                  <Button onPress={()=>navigation.navigate('Store', {data:'products'})} style={{backgroundColor:'#faaea6', borderRadius:10, width:300}} labelStyle={{fontSize:20, paddingVertical:5}} mode='contained'>Go Buy Something</Button>
+                  <Button onPress={()=>navigation.navigate('Store', {data:'featured'})} style={{backgroundColor:'#faaea6', borderRadius:10, width:300}} labelStyle={{fontSize:20, paddingVertical:5}} mode='contained'>Go Buy Something</Button>
               </View>
             }
         </SafeAreaView>

@@ -1,15 +1,15 @@
 import { View } from 'react-native';
-import { ActivityIndicator, Avatar, Button, Icon, IconButton, Text, TextInput } from 'react-native-paper';
+import { ActivityIndicator, Avatar, Button, Icon, IconButton, Text } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Login from './Login';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
-import { API_URL } from '@env';
+import { getAuthUser, logout } from '../api/auth';
 
 const Profile = () => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+  
     function isUserExist()
     {
         const data = SecureStore.getItem('user');
@@ -21,11 +21,12 @@ const Profile = () => {
         else
             return false;
     }
-    function logout()
+    
+    function logoutUser()
     {
         setLoading(true);
         const token = SecureStore.getItem('token');
-        axios.post(`${API_URL}/api/logout`, null,{headers: {Authorization: `Bearer ${token}`}}).catch((error)=>console.log(error));
+        logout(token).catch((error)=>console.log(error));
         SecureStore.deleteItemAsync('token');
         SecureStore.deleteItemAsync('user');
         setUser(null);
@@ -33,7 +34,7 @@ const Profile = () => {
     }
     async function fetchAuthUser(){
         const token = SecureStore.getItem('token');
-        const response = await axios.get(`${API_URL}/api/user`, {headers: {Authorization: `Bearer ${token}`}})
+        const response = await getAuthUser(token)
         .catch((error)=>{
             setUser(null);
             setLoading(false);
@@ -104,7 +105,7 @@ const Profile = () => {
             </View>
         </View>
         <View style={{margin:20}}>
-            <Button icon="logout" labelStyle={{color:'red'}} mode="outlined" style={{borderRadius:5}} onPress={logout}>
+            <Button icon="logout" labelStyle={{color:'red'}} mode="outlined" style={{borderRadius:5}} onPress={logoutUser}>
                 Logout
             </Button>
         </View>

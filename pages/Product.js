@@ -1,28 +1,12 @@
 import React, { useContext } from 'react'
 import { Image, ScrollView, View } from 'react-native';
 import { Button, Chip, Text } from 'react-native-paper';
-import { addToCart } from '../utils/addToCart';
-import { CartContext } from '../context/cartContext';
 import { API_URL } from '@env';
+import { CartContext } from '../context/cartContext';
 
 const Product = ({route}) => {
-    const { product } = route.params;
-    const { cartProducts, setCartProducts, totalPrice, setTotalPrice, cartQ, setCartQ } = useContext(CartContext);
-    function add()
-    {
-        const temp = cartQ;
-        if(!cartProducts.includes(product))
-        {
-            setCartProducts(cartProducts=>[...cartProducts, product]);
-            temp[product.id] = 1;
-        }
-        else
-            temp[product.id] += 1;
-        setCartQ(temp);
-        const price = product.promotion?product.promotion.promotion_price:product.price;
-        setTotalPrice(totalPrice + price);
-        addToCart(product.id)
-    }
+  const { addToCart } = useContext(CartContext);
+  const { product } = route.params;
   return (
     <ScrollView>
       <View style={{backgroundColor:'white'}}>
@@ -51,7 +35,7 @@ const Product = ({route}) => {
         </View>
       </View>
       <View  style={{margin:20, alignItems:'center'}}>
-          <Button onPress={add} style={{backgroundColor:'#faaea6', borderRadius:20, width:'100%'}} labelStyle={{fontSize:20, paddingVertical:10, fontWeight:'bold'}} mode='contained'>Add to Cart</Button>
+          <Button onPress={()=>addToCart(product)} style={{backgroundColor:'#faaea6', borderRadius:20, width:'100%'}} labelStyle={{fontSize:20, paddingVertical:10, fontWeight:'bold'}} mode='contained'>Add to Cart</Button>
       </View>
     </ScrollView>
   )
