@@ -12,7 +12,7 @@ const Login = ({setUser}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
-
+    const [error, setError] = useState(false);
     async function login()
     {
         setLoading(true);
@@ -22,6 +22,7 @@ const Login = ({setUser}) => {
         }
         const response = await axios.post(`${API_URL}/api/login`, data)
         .catch((error)=>{
+            setError(true);
             setLoading(false);
         });
         if (response && response.status == 200)
@@ -57,6 +58,9 @@ const Login = ({setUser}) => {
                 <TextInput mode='outlined' defaultValue={password} onChangeText={newPassword =>setPassword(newPassword)} secureTextEntry={true}/>
             </View>
         </View>
+        {error &&
+        <Text style={{marginLeft:20, color:'red', fontWeight:'bold'}}>Your Email or Password is invalide</Text>
+        }
         <View style={{margin:20}}>
             <Button labelStyle={{color:'white'}} mode="contained-tonal" style={{borderRadius:5, backgroundColor:'black'}} onPress={login}>
                 Login
