@@ -58,14 +58,14 @@ const Login = ({setUser}) => {
             </View>
         </View>
         <View style={{margin:20}}>
-            <Button labelStyle={{color:'white'}} mode="contained-tonal" style={{borderRadius:5, backgroundColor:'#fa3b7e'}} onPress={login}>
+            <Button labelStyle={{color:'white'}} mode="contained-tonal" style={{borderRadius:5, backgroundColor:'black'}} onPress={login}>
                 Login
             </Button>
         </View>
         <View style={{alignItems:'center', gap:5}}>
             <Text variant='bodyMedium' style={{opacity:0.4}}>Don't have an account?</Text>
             <TouchableOpacity onPress={()=>{navigation.navigate('Register')}}>
-                <Text variant='bodyMedium' style={{fontWeight:'bold', opacity:0.8,color:'#fa3b7e'}}>Register</Text>
+                <Text variant='bodyMedium' style={{fontWeight:'bold', opacity:0.8,color:'black'}}>Register</Text>
             </TouchableOpacity>
         </View>
     </SafeAreaView>

@@ -12,7 +12,6 @@ const categories = ['Clocks', 'Lamps', 'Paintains', 'Sofa', 'House'];
 
 const Home = () => {
     const navigation = useNavigation();
-    const [selectedCategory, setSelectedCategory] = useState(1);
     const [featured, setFeatured] = useState([]);
     const [manProducts, setManProducts] = useState([]);
     const [womanProducts, setWomanProducts] = useState([]);
@@ -129,7 +128,7 @@ const styles = StyleSheet.create({
     },
     newArrival:{
         marginHorizontal:10,
-        backgroundColor:'#fa3b7e',
+        backgroundColor:'black',
         padding:20,
         justifyContent:'flex-start',
         flexDirection:'row',

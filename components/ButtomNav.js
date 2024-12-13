@@ -19,7 +19,7 @@ const ButtomNav = ({navigation}) => {
         favourit: Favourit,
         cart: Cart,
         profile: Profile,
-      });    
+      });
   return (
     <BottomNavigation
       shifting={true}
