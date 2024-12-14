@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useContext } from 'react'
-import { Pressable, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Image, Pressable, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Card, IconButton, Text } from 'react-native-paper';
 import { API_URL } from '@env';
 import { CartContext } from '../context/cartContext';
@@ -13,19 +13,19 @@ const ProductCard = ({product}) =>{
     }
     
     return (
-        <Card mode='contained' style={styles.productCard}>
+        <Card mode='contained' style={styles.productCard} >
             <Pressable onPress={getProduct}>
-            <Card.Cover style={{height:160, width:180}} source={{uri:`${API_URL}${product.images[0].url}`}}/>
+            <Image style={{height:160, width:180}} source={{uri:`${API_URL}${product.images[0].url}`}}/>
             </Pressable>
             <Card.Content style={{height:'100%'}}>
                 <TouchableOpacity onPress={getProduct}>
-                    <Text variant="titleSmall" style={{marginVertical:5, fontWeight:'bold',height:40}}>{product.title}</Text>
+                    <Text style={{marginVertical:5, fontWeight:'bold',height:43, fontSize:12, opacity:0.8}}>{product.title}</Text>
                 </TouchableOpacity>
                 {product.promotion?
                 <View style={{flexDirection:"row", justifyContent:'space-between', alignItems:'center', height:30}}>
                     <View>
                         <Text variant="bodySmall" style={{fontWeight:'bold', color:'red', textDecorationLine:'line-through'}}>{product.price}DH</Text>
-                        <Text variant="bodyMedium" style={{fontWeight:'bold', color:'#faaea6'}}>{product.promotion.promotion_price}DH</Text>
+                        <Text variant="bodyMedium" style={{fontWeight:'bold', color:'black'}}>{product.promotion.promotion_price}DH</Text>
                     </View>
                     <IconButton
                         icon="plus"
