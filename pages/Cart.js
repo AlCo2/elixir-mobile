@@ -46,17 +46,31 @@ const Cart = () => {
             </View>
             {cartProducts.length>0?
               <>
-                <View style={{margin:20, flexDirection:'row', justifyContent:'space-between'}}>
-                    <Text variant='titleMedium' style={{fontWeight:'bold'}}>Total</Text>
-                    <Text variant='titleMedium' style={{fontWeight:'bold', color:'#faaea6'}}>{totalPrice}DH</Text>
+                <View style={{margin:20}}>
+                  <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                      <Text variant='titleMedium' style={{fontWeight:'bold', opacity:0.5}}>Discount</Text>
+                      <Text variant='titleMedium' style={{fontWeight:'bold'}}>0 DH</Text>
+                  </View>
+                  <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                      <Text variant='titleMedium' style={{fontWeight:'bold', opacity:0.5}}>Delivery</Text>
+                      <Text variant='titleMedium' style={{fontWeight:'bold'}}>0 DH</Text>
+                  </View>
+                  <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                      <Text variant='titleMedium' style={{fontWeight:'bold', opacity:0.5}}>Tax</Text>
+                      <Text variant='titleMedium' style={{fontWeight:'bold'}}>0 DH</Text>
+                  </View>
+                  <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                      <Text variant='titleMedium' style={{fontWeight:'bold', opacity:0.5}}>Total</Text>
+                      <Text variant='titleMedium' style={{fontWeight:'bold'}}>{totalPrice}DH</Text>
+                  </View>
                 </View>
-                <View style={{margin:20, alignItems:'center'}}>
-                    <Button onPress={()=>fetchProducts()} style={{backgroundColor:'#faaea6', borderRadius:10, width:200}} labelStyle={{fontSize:20, paddingVertical:5}} mode='contained'>Checkout</Button>
+                <View style={{marginRight:20, alignItems:'flex-end'}}>
+                  <Button onPress={()=>fetchProducts()} style={{backgroundColor:'black', borderRadius:5, width:140}} labelStyle={{fontSize:20, paddingVertical:5}} mode='contained'>Checkout</Button>
                 </View>
               </>
             :
               <View style={{margin:20, alignItems:'center'}}>
-                  <Button onPress={()=>navigation.navigate('Store', {data:'featured'})} style={{backgroundColor:'#faaea6', borderRadius:10, width:300}} labelStyle={{fontSize:20, paddingVertical:5}} mode='contained'>Go Buy Something</Button>
+                <Button onPress={()=>navigation.navigate('Store', {data:'featured'})} style={{backgroundColor:'#faaea6', borderRadius:10, width:300}} labelStyle={{fontSize:20, paddingVertical:5}} mode='contained'>Go Buy Something</Button>
               </View>
             }
         </SafeAreaView>
