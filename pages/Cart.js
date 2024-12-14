@@ -1,5 +1,5 @@
 import { useContext, useEffect } from 'react'
-import { Button, Text } from 'react-native-paper';
+import { Button, Divider, Text } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView, View } from 'react-native';
 import CartItem from '../components/CartItem';
@@ -44,6 +44,7 @@ const Cart = () => {
               <Text variant='titleLarge' style={{textAlign:'center', fontWeight:'bold', opacity:0.5}}>Your Cart is Empty</Text>
               }
             </View>
+            <Divider style={{marginVertical:10}} />
             {cartProducts.length>0?
               <>
                 <View style={{margin:20}}>
@@ -65,7 +66,7 @@ const Cart = () => {
                   </View>
                 </View>
                 <View style={{marginRight:20, alignItems:'flex-end'}}>
-                  <Button onPress={()=>fetchProducts()} style={{backgroundColor:'black', borderRadius:5, width:140}} labelStyle={{fontSize:20, paddingVertical:5}} mode='contained'>Checkout</Button>
+                  <Button onPress={()=>fetchProducts()} style={{backgroundColor:'black', borderRadius:100, width:140}} labelStyle={{fontSize:20, paddingVertical:5}} mode='contained'>Pay Now</Button>
                 </View>
               </>
             :

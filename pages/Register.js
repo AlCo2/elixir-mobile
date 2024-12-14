@@ -40,14 +40,14 @@ const Register = () => {
             </View>
         </View>
         <View style={{margin:20}}>
-            <Button labelStyle={{color:'white'}} mode="contained" style={{borderRadius:5, backgroundColor:'#fa3b7e'}} onPress={() => console.log('Pressed')}>
+            <Button labelStyle={{color:'white'}} mode="contained" style={{borderRadius:5, backgroundColor:'black'}} onPress={() => console.log('Pressed')}>
                 Register
             </Button>
         </View>
         <View style={{alignItems:'center', gap:5}}>
             <Text variant='bodyMedium' style={{opacity:0.4}}>Already have an account?</Text>
             <TouchableOpacity onPress={()=>{navigation.goBack()}}>
-                <Text variant='bodyMedium' style={{fontWeight:'bold', opacity:0.8,color:'#fa3b7e'}}>Login</Text>
+                <Text variant='bodyMedium' style={{fontWeight:'bold', opacity:0.8,color:'black'}}>Login</Text>
             </TouchableOpacity>
         </View>
     </SafeAreaView>

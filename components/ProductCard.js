@@ -15,38 +15,25 @@ const ProductCard = ({product}) =>{
     return (
         <Card mode='contained' style={styles.productCard} >
             <Pressable onPress={getProduct}>
-            <Image style={{height:160, width:180}} source={{uri:`${API_URL}${product.images[0].url}`}}/>
+            <Image style={{height:160, width:180, borderRadius:10}} source={{uri:`${API_URL}${product.images[0].url}`}}/>
             </Pressable>
             <Card.Content style={{height:'100%'}}>
                 <TouchableOpacity onPress={getProduct}>
                     <Text style={{marginVertical:5, fontWeight:'bold',height:43, fontSize:12, opacity:0.8}}>{product.title}</Text>
                 </TouchableOpacity>
-                {product.promotion?
                 <View style={{flexDirection:"row", justifyContent:'space-between', alignItems:'center', height:30}}>
-                    <View>
-                        <Text variant="bodySmall" style={{fontWeight:'bold', color:'red', textDecorationLine:'line-through'}}>{product.price}DH</Text>
-                        <Text variant="bodyMedium" style={{fontWeight:'bold', color:'black'}}>{product.promotion.promotion_price}DH</Text>
+                    {product.promotion?
+                        <View>
+                            <Text variant="bodySmall" style={{fontWeight:'bold', color:'red', textDecorationLine:'line-through', opacity:0.8}}>{product.price} DH</Text>
+                            <Text variant="bodyMedium" style={{fontWeight:'bold', color:'black'}}>{product.promotion.promotion_price} DH</Text>
+                        </View>
+                    :
+                        <Text variant="bodyMedium" style={{fontWeight:'bold', color:'black'}}>{product.price} DH</Text>
+                    }
+                    <View style={{flexDirection:"row", justifyContent:'space-between', alignItems:'center', height:30}}>
+                        <IconButton icon="cart" iconColor={"white"} style={{backgroundColor:'#a6d612', borderRadius:10}} size={20}onPress={()=>addToCart(product)}/>
                     </View>
-                    <IconButton
-                        icon="plus"
-                        iconColor={"white"}
-                        style={{backgroundColor:'black', borderRadius:10}}
-                        size={20}
-                        onPress={()=>addToCart(product)}
-                    />
-                </View>
-                :
-                <View style={{flexDirection:"row", justifyContent:'space-between', alignItems:'center', height:30}}>
-                    <Text variant="bodyMedium" style={{fontWeight:'bold', color:'#faaea6'}}>{product.price}DH</Text>
-                    <IconButton
-                        icon="plus"
-                        iconColor={"white"}
-                        style={{backgroundColor:'black', borderRadius:10}}
-                        size={20}
-                        onPress={()=>addToCart(product)}
-                    />
-                </View>
-                }
+                </View>                
             </Card.Content>
         </Card>
     )

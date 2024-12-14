@@ -42,7 +42,7 @@ const Home = () => {
                     />
                 </View>
             </View>
-            <View style={{alignItems:'center', marginTop:20, marginHorizontal:10}}>
+            <View style={{alignItems:'center', marginHorizontal:10}}>
                 <Searchbar
                     placeholder="Search Product"
                     style={{backgroundColor:'white', width:'100%'}}
@@ -55,7 +55,7 @@ const Home = () => {
             <View style={{margin:20, flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
                 <Text variant="titleLarge" style={{fontWeight:'bold'}}>Featured Products</Text>
                 <Pressable onPress={()=>navigation.navigate('Store', {data:'featured'})}>
-                    <Text variant="bodyMedium" style={{color:'#faaea6', fontWeight:'600'}}>See All</Text>
+                    <Text variant="bodyMedium" style={{fontWeight:'600', opacity:0.6}}>See All</Text>
                 </Pressable>
             </View>
             <View style={{marginHorizontal:10, flexDirection:'row', gap:10, flexWrap:'wrap'}}>
@@ -112,12 +112,13 @@ const styles = StyleSheet.create({
         marginHorizontal:10,
     },
     newArrival:{
+        marginTop:20,
         marginHorizontal:10,
         backgroundColor:'black',
         padding:20,
         justifyContent:'flex-start',
         flexDirection:'row',
-        borderRadius:20
+        borderRadius:10
     },
     newArrivalImage:{
         height:150,
