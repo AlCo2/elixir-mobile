@@ -41,7 +41,7 @@ const Cart = () => {
                   <CartItem key={product.id} product={product} Q={cartQ[product.id]}/>
                 )))
               :
-              <Text variant='titleLarge' style={{textAlign:'center'}}>Your Cart is Empty</Text>
+              <Text variant='titleLarge' style={{textAlign:'center', fontWeight:'bold', opacity:0.5}}>Your Cart is Empty</Text>
               }
             </View>
             {cartProducts.length>0?
@@ -70,7 +70,7 @@ const Cart = () => {
               </>
             :
               <View style={{margin:20, alignItems:'center'}}>
-                <Button onPress={()=>navigation.navigate('Store', {data:'featured'})} style={{backgroundColor:'#faaea6', borderRadius:10, width:300}} labelStyle={{fontSize:20, paddingVertical:5}} mode='contained'>Go Buy Something</Button>
+                <Button onPress={()=>navigation.navigate('Store', {data:'featured'})} style={{backgroundColor:'black', borderRadius:10, width:300}} labelStyle={{fontSize:20, paddingVertical:5}} mode='contained'>Buy Something</Button>
               </View>
             }
         </SafeAreaView>

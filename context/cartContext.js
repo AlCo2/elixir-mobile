@@ -2,6 +2,7 @@ import { createContext, useState } from "react";
 import { addQToCart } from "../utils/addQToCart";
 import * as SecureStore from 'expo-secure-store';
 import { deleteFromCart } from "../utils/deleteFromCart";
+import { subtractQFromCart } from "../utils/subtractQFromCart";
 
 export const CartContext = createContext(null);
 
@@ -41,8 +42,22 @@ export const CartProvider = ({children}) => {
             addQToCart(product.id, setCartQ)
         }
     }
+    const subtractFromCart = (product) =>
+    {
+        const temp = cartQ;
+        if(cartProducts.includes(product))
+        {
+            if (temp[product.id] > 1)
+            {
+                temp[product.id]-=1;                
+                const price = product.promotion?product.promotion.promotion_price:product.price;
+                setTotalPrice(totalPrice - price);
+                subtractQFromCart(product.id, setCartQ);
+            }
+        }
+    }
     return (
-    <CartContext.Provider value={{cartProducts, setCartProducts, totalPrice, setTotalPrice, cartQ, setCartQ, addToCart, deleteItem}}>
+    <CartContext.Provider value={{cartProducts, setCartProducts, totalPrice, setTotalPrice, cartQ, setCartQ, addToCart, deleteItem, subtractFromCart}}>
         {children}        
     </CartContext.Provider>
 )}

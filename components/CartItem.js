@@ -5,7 +5,7 @@ import { useContext } from 'react';
 import { CartContext } from '../context/cartContext';
 
 const CartItem = ({product, Q}) => {
-  const { deleteItem, cartQ } = useContext(CartContext);
+  const { deleteItem, cartQ, addToCart, subtractFromCart } = useContext(CartContext);
   return (
     <View style={{flexDirection:'row', backgroundColor:'white', marginHorizontal:10, borderRadius:10}}>
       <View style={{flexDirection:'row', width:'75%'}}>
@@ -22,9 +22,9 @@ const CartItem = ({product, Q}) => {
           <IconButton icon="delete" iconColor={"red"} size={20} onPress={()=>deleteItem(product)}/>
         </View>
         <View style={{ height:'50%', flexDirection:'row', alignItems:'center', gap:5}}>
-          <IconButton style={{borderRadius:5}} icon='minus' size={10} mode='outlined' onPress={()=>console.log("min")}></IconButton> 
+          <IconButton style={{borderRadius:5}} icon='minus' size={10} mode='outlined' onPress={()=>subtractFromCart(product)}></IconButton> 
           <Text>{cartQ[product.id]}</Text>
-          <IconButton style={{borderRadius:5}} icon='plus' size={10} mode='outlined' onPress={()=>console.log("add")}></IconButton>
+          <IconButton style={{borderRadius:5}} icon='plus' size={10} mode='outlined' onPress={()=>addToCart(product)}></IconButton>
         </View>
       </View>
     </View>
