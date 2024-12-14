@@ -1,13 +1,15 @@
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { TouchableOpacity, View } from 'react-native';
 import { ActivityIndicator, Button, Text, TextInput } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as SecureStore from 'expo-secure-store';
 import { API_URL } from '@env';
+import { CartContext } from '../context/cartContext';
 
-const Login = ({setUser}) => {
+const Login = () => {
+    const { setUser } = useContext(CartContext);
     const navigation = useNavigation();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -32,6 +34,7 @@ const Login = ({setUser}) => {
             .then((response)=>response.data);
             setUser(user);
             setLoading(false);
+            navigation.navigate('Home');
         }
         setLoading(false);
     }

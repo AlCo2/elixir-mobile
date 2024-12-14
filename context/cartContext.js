@@ -7,6 +7,7 @@ import { subtractQFromCart } from "../utils/subtractQFromCart";
 export const CartContext = createContext(null);
 
 export const CartProvider = ({children}) => {
+    const [user, setUser] = useState(null);
     const [cartProducts, setCartProducts] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
     const [cartQ, setCartQ] = useState({});
@@ -57,7 +58,7 @@ export const CartProvider = ({children}) => {
         }
     }
     return (
-    <CartContext.Provider value={{cartProducts, setCartProducts, totalPrice, setTotalPrice, cartQ, setCartQ, addToCart, deleteItem, subtractFromCart}}>
+    <CartContext.Provider value={{cartProducts, setCartProducts, totalPrice, setTotalPrice, cartQ, setCartQ, addToCart, deleteItem, subtractFromCart, user, setUser}}>
         {children}        
     </CartContext.Provider>
 )}

@@ -2,26 +2,16 @@ import { View } from 'react-native';
 import { ActivityIndicator, Avatar, Button, Icon, IconButton, Text } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Login from './Login';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import { getAuthUser, logout } from '../api/auth';
+import { isUserExist } from '../utils/isUserExist';
+import { CartContext } from '../context/cartContext';
 
 const Profile = () => {
-    const [user, setUser] = useState(null);
+    const { user, setUser} = useContext(CartContext);
     const [loading, setLoading] = useState(true);
-  
-    function isUserExist()
-    {
-        const data = SecureStore.getItem('user');
-        if (data)
-        {
-            setUser(JSON.parse(data));
-            return true;
-        }
-        else
-            return false;
-    }
-    
+
     function logoutUser()
     {
         setLoading(true);
@@ -32,6 +22,7 @@ const Profile = () => {
         setUser(null);
         setLoading(false);
     }
+    
     async function fetchAuthUser(){
         const token = SecureStore.getItem('token');
         const response = await getAuthUser(token)
@@ -47,7 +38,7 @@ const Profile = () => {
         setLoading(false);
     }
     useEffect(()=>{
-        if (!isUserExist())
+        if (!isUserExist(setUser))
         {
             fetchAuthUser();
         }
