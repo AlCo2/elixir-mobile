@@ -6,15 +6,22 @@ export const getProducts = (data) =>
     return axios.get(`${API_URL}/api/product/${data}/all`);
 }
 
-export const getFeaturedProducts = () => {
+export const getProductsByName = (title) =>
+{
+    return axios.get(`${API_URL}/api/product/search?title=${title}`);
+}
+export const getFeaturedProducts = () =>
+{
     return axios.get(`${API_URL}/api/product/featured`);
 }
 
-export const getManProducts = () => {
+export const getManProducts = () =>
+{
     return axios.get(`${API_URL}/api/product/man`);
 }
 
-export const getWomanProducts = () => {
+export const getWomanProducts = () =>
+{
     return axios.get(`${API_URL}/api/product/woman`);
 }
 

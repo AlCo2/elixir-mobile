@@ -14,9 +14,15 @@ import { isUserExist } from "../utils/isUserExist";
 const Home = () => {
     const navigation = useNavigation();
     const { setFavourites, setUser } = useContext(CartContext);
+    const [search, setSearch] = useState('');
     const [featured, setFeatured] = useState([]);
     const [manProducts, setManProducts] = useState([]);
     const [womanProducts, setWomanProducts] = useState([]);
+
+    function handleSearch()
+    {
+        navigation.navigate('Store', {data:'featured', value:search})
+    }
 
     async function fetchFavourites(){
         const token = SecureStore.getItem('token');
@@ -50,7 +56,7 @@ const Home = () => {
                     <Badge style={{position:'absolute', backgroundColor:'black', right:5, top:5}} size={16}>2</Badge>
                     <IconButton
                         icon="bell"
-                        iconColor={'#faaea6'}
+                        iconColor={'gray'}
                         size={25}
                         onPress={() => navigation.navigate('Notification')}
                     />
@@ -60,6 +66,9 @@ const Home = () => {
                 <Searchbar
                     placeholder="Search Product"
                     style={{backgroundColor:'white', width:'100%'}}
+                    value={search}
+                    onChangeText={setSearch}
+                    onSubmitEditing={()=>handleSearch()}
                 />
             </View>
             <View style={styles.newArrival}>

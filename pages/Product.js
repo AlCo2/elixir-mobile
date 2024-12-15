@@ -16,7 +16,6 @@ const Product = ({route}) => {
   const [isFavourite, setIsFavourite] = useState(false);
 
   const addToFav = async () =>{
-    console.log('here');
     const token = SecureStore.getItem('token');
     if (token)
     {
