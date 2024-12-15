@@ -9,10 +9,11 @@ import { getFeaturedProducts, getManProducts, getWomanProducts } from "../api/pr
 import { getFavouritProducts } from "../api/favourit";
 import { CartContext } from "../context/cartContext";
 import * as SecureStore from 'expo-secure-store';
+import { isUserExist } from "../utils/isUserExist";
 
 const Home = () => {
     const navigation = useNavigation();
-    const { setFavourites } = useContext(CartContext);
+    const { setFavourites, setUser } = useContext(CartContext);
     const [featured, setFeatured] = useState([]);
     const [manProducts, setManProducts] = useState([]);
     const [womanProducts, setWomanProducts] = useState([]);
@@ -38,6 +39,7 @@ const Home = () => {
     useEffect(()=>{
         fetchFavourites();
         fetchData();
+        isUserExist(setUser);
     }, []);
 
   return (

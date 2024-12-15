@@ -1,4 +1,3 @@
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { PaperProvider} from 'react-native-paper';
@@ -6,10 +5,10 @@ import ButtomNav from './components/ButtomNav';
 import Product from './pages/Product';
 import Register from './pages/Register';
 import Store from './pages/Store';
-import { useState } from 'react';
-import { CartContext, CartProvider } from './context/cartContext';
+import { CartProvider } from './context/cartContext';
 import Notification from './pages/Notification';
 import Login from './pages/Login';
+import FlashMessage from "react-native-flash-message";
 
 const Stack = createNativeStackNavigator();
 
@@ -28,6 +27,7 @@ export default function App() {
             <Stack.Screen options={{headerTitle:'', headerTransparent:true, headerBackTitleVisible:false}} name="Register" component={Register} />
           </Stack.Navigator>
         </NavigationContainer>
+        <FlashMessage position='top'/>
       </PaperProvider>
     </CartProvider>
   );

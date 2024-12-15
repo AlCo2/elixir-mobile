@@ -13,14 +13,14 @@ const Product = ({route}) => {
         <Image style={{height:400, width:'100%'}} source={{uri:`${API_URL}${product.images[0].url}`}}/>
       </View>
       <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center', margin:20}}>
-        <Text variant='titleLarge' style={{fontWeight:'bold', width:'60%'}}>{product.title}</Text>
+        <Text style={{fontWeight:'bold', width:'75%', fontSize:18}}>{product.title}</Text>
         {product.promotion?
           <View>
-            <Text variant='titleSmall' style={{color:'red', fontWeight:'bold', textDecorationLine:'line-through', textAlign:'right'}}>{product.price}DH</Text>
-            <Text variant='titleMedium' style={{color:'#faaea6', fontWeight:'bold'}}>{product.promotion.promotion_price}DH</Text>
+            <Text variant='titleSmall' style={{color:'red', fontWeight:'bold', textDecorationLine:'line-through', textAlign:'right', opacity:0.8}}>{product.price}DH</Text>
+            <Text variant='titleMedium' style={{color:'black', fontWeight:'bold'}}>{product.promotion.promotion_price}DH</Text>
           </View>
           :
-          <Text variant='titleMedium' style={{color:'#faaea6', fontWeight:'bold'}}>{product.price}DH</Text>
+          <Text variant='titleMedium' style={{color:'black', fontWeight:'bold'}}>{product.price}DH</Text>
         }
       </View>
       <View style={{marginHorizontal:20}}>
@@ -35,7 +35,7 @@ const Product = ({route}) => {
         </View>
       </View>
       <View  style={{margin:20, alignItems:'center'}}>
-          <Button onPress={()=>addToCart(product)} style={{backgroundColor:'#faaea6', borderRadius:20, width:'100%'}} labelStyle={{fontSize:20, paddingVertical:10, fontWeight:'bold'}} mode='contained'>Add to Cart</Button>
+          <Button onPress={()=>addToCart(product)} style={{backgroundColor:'black', borderRadius:20, width:'100%'}} labelStyle={{fontSize:20, paddingVertical:10, fontWeight:'bold'}} mode='contained'>Add to Cart</Button>
       </View>
     </ScrollView>
   )

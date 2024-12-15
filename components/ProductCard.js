@@ -6,6 +6,7 @@ import { API_URL } from '@env';
 import { CartContext } from '../context/cartContext';
 import * as SecureStore from 'expo-secure-store';
 import { addProductToFavourit } from '../api/favourit';
+import { showMessage } from 'react-native-flash-message';
 
 const ProductCard = ({product}) =>{
     const navigation = useNavigation();;
@@ -64,7 +65,7 @@ const ProductCard = ({product}) =>{
                         <Text variant="bodyMedium" style={{fontWeight:'bold', color:'black'}}>{product.price} DH</Text>
                     }
                     <View style={{flexDirection:"row", justifyContent:'space-between', alignItems:'center', height:30}}>
-                        <IconButton icon="cart" iconColor={"white"} style={{backgroundColor:'#a6d612', borderRadius:10}} size={20}onPress={()=>addToCart(product)}/>
+                        <IconButton icon="cart" iconColor={"white"} style={{backgroundColor:'#a6d612', borderRadius:10}} size={20}onPress={()=>{addToCart(product);showMessage({message:'success',description:`${product.title} added to cart successfully`, type:'success'})}}/>
                     </View>
                 </View>                
             </Card.Content>
