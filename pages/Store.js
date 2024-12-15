@@ -1,17 +1,27 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ScrollView, View } from "react-native";
 import { ActivityIndicator, Button, Searchbar, Text } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ProductCard from "../components/ProductCard";
 import { getProducts } from "../api/products";
-
+import * as SecureStore from 'expo-secure-store';
+import { getFavouritProducts } from "../api/favourit";
+import { CartContext } from "../context/cartContext";
 
 const Store = ({ route }) => {
     const { data } = route.params;
+    const { favourites, setFavourites } = useContext(CartContext);
     const [products, setProducts] = useState([]);
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(true);
     
+    async function fetchFavourites(){
+        const token = SecureStore.getItem('token');
+        const response = await getFavouritProducts(token);
+        if (response && response.status == 200)
+            setFavourites(response.data);
+    }
+
     async function fetchProducts()
     {
         const response = await getProducts(data).catch((error)=>{
@@ -23,7 +33,9 @@ const Store = ({ route }) => {
             setProducts(response.data);
         setLoading(false);
     }
+
     useEffect(()=>{
+        fetchFavourites();
         fetchProducts();
     }, [])
 
@@ -52,7 +64,7 @@ const Store = ({ route }) => {
                 :
                     products && products.length>0?
                         products.map((product)=>(
-                            <ProductCard key={product.id} product={product}/>
+                            <ProductCard key={product.id} product={product} favourites={favourites}/>
                             ))
                     :
                         <Text style={{textAlign:'center',width:'100%'}}>There is no product Available</Text>

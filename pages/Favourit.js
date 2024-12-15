@@ -9,14 +9,11 @@ import { getAuthUser } from '../api/auth';
 import { useNavigation } from '@react-navigation/native';
 import { CartContext } from '../context/cartContext';
 import { getFavouritProducts } from '../api/favourit';
-import { API_URL } from '@env';
 
 
-const Cart = () => {
-  const {user, setUser} = useContext(CartContext);
+const Favourit = () => {
+  const {user, setUser, favourites, setFavourites} = useContext(CartContext);
   const navigation = useNavigation();
-  const [favourits, setFavourits] = useState(null);
-
   async function fetchProducts()
   {
     const token = SecureStore.getItem('token');
@@ -27,7 +24,7 @@ const Cart = () => {
     });
     if (response && response.status == 200)
     {
-      setFavourits(response.data);
+      setFavourites(response.data);
     }
   }
   async function fetchAuthUser(){
@@ -74,9 +71,9 @@ const Cart = () => {
               <Text variant='headlineLarge' style={{fontWeight:'bold'}}>Favourit</Text>
             </View>
             <View style={{gap:10}}>
-              {favourits && favourits.length>0?
-                favourits.map((favourit)=>(
-                  <FavouritItem key={favourit.id} title={favourit.title} price={favourit.promotion && favourit.promotion.active?favourit.promotion.promotion_price:favourit.price} image={`${API_URL}${favourit.images[0].url}`}/>
+              {favourites && favourites.length>0?
+                favourites.map((favourit)=>(
+                  <FavouritItem key={favourit.id} product={favourit} favourites={favourites} setFavourites={setFavourites}/>
                 ))  
                 :
                 <Text variant='titleLarge' style={{textAlign:'center', fontWeight:'bold', opacity:0.5}}>You Favourit list is Empty</Text>
@@ -87,4 +84,4 @@ const Cart = () => {
   )
 }
 
-export default Cart;
+export default Favourit;

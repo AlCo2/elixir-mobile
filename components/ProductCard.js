@@ -1,19 +1,52 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Image, Pressable, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Card, IconButton, Text } from 'react-native-paper';
 import { API_URL } from '@env';
 import { CartContext } from '../context/cartContext';
+import * as SecureStore from 'expo-secure-store';
+import { addProductToFavourit } from '../api/favourit';
 
 const ProductCard = ({product}) =>{
-    const navigation = useNavigation();
-    const { addToCart } = useContext(CartContext);
+    const navigation = useNavigation();;
+    const [isFavourite, setIsFavourite] = useState(false);
+    const { addToCart, favourites, setFavourites } = useContext(CartContext);
     const getProduct = () =>{
         navigation.navigate('Product', {product:product})
     }
     
+    const addToFav = async () =>{
+        const token = SecureStore.getItem('token');
+        if (token)
+        {
+            if (isFavourite)
+            {
+                const updatedFavourites = favourites.filter(p => p.id !== product.id);
+                setFavourites(updatedFavourites);
+            }
+            else
+            {
+                setFavourites(favourites=>[...favourites, product]);
+            }
+            setIsFavourite(!isFavourite);
+        }
+        await addProductToFavourit(token, product.id).catch((error)=>{
+            if (error.response.status===401)
+            {
+                navigation.navigate('Login');
+            }
+        });
+    }
+
+    useEffect(()=>{
+        setIsFavourite(favourites.some(p => p.id === product.id))
+    }, [favourites])
+
     return (
         <Card mode='contained' style={styles.productCard} >
+            <View style={{position:'absolute', top:0, right:0, zIndex:1}}>
+                <IconButton icon="heart" iconColor={isFavourite?"red":"gray"} style={{ borderRadius:10}} size={20}onPress={()=>addToFav()}/>
+            </View>
             <Pressable onPress={getProduct}>
             <Image style={{height:160, width:180, borderRadius:10}} source={{uri:`${API_URL}${product.images[0].url}`}}/>
             </Pressable>
