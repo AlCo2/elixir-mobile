@@ -8,7 +8,7 @@ import * as SecureStore from 'expo-secure-store';
 import { addProductToFavourit } from '../api/favourit';
 import { showMessage } from 'react-native-flash-message';
 
-const ProductCard = ({product}) =>{
+const StoreProductCard = ({product}) =>{
     const navigation = useNavigation();
     const [isFavourite, setIsFavourite] = useState(false);
     const { addToCart, favourites, setFavourites } = useContext(CartContext);
@@ -56,10 +56,10 @@ const ProductCard = ({product}) =>{
                     <Text style={{marginVertical:5, fontWeight:'bold',height:43, fontSize:12, opacity:0.8}}>{product.title}</Text>
                 </TouchableOpacity>
                 <View style={{flexDirection:"row", justifyContent:'space-between', alignItems:'center', height:30}}>
-                    {product.promotion && product.promotion.active?
+                    {product.active?
                         <View>
                             <Text variant="bodySmall" style={{fontWeight:'bold', color:'red', textDecorationLine:'line-through', opacity:0.8}}>{product.price} DH</Text>
-                            <Text variant="bodyMedium" style={{fontWeight:'bold', color:'black'}}>{product.promotion.promotion_price} DH</Text>
+                            <Text variant="bodyMedium" style={{fontWeight:'bold', color:'black'}}>{product.promotion_price} DH</Text>
                         </View>
                     :
                         <Text variant="bodyMedium" style={{fontWeight:'bold', color:'black'}}>{product.price} DH</Text>
@@ -81,4 +81,4 @@ const styles = StyleSheet.create({
     }
   });
 
-export default ProductCard;
+export default StoreProductCard;

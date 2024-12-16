@@ -6,9 +6,10 @@ export const getProducts = (data) =>
     return axios.get(`${API_URL}/api/product/${data}/all`);
 }
 
-export const getProductsByName = (title) =>
+export const getProductsByName = (title, sort) =>
 {
-    return axios.get(`${API_URL}/api/product/search?title=${title}`);
+    const url = `${API_URL}/api/product/search?${title?'title='+title:''}${sort?'&sort='+sort:''}`;
+    return axios.get(url);
 }
 export const getFeaturedProducts = () =>
 {
