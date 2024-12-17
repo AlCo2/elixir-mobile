@@ -5,10 +5,10 @@ import { ActivityIndicator, Button, Text, TextInput } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { getAuthUser, register_api } from '../api/auth';
 import * as SecureStore from 'expo-secure-store';
-import { CartContext } from '../context/cartContext';
+import { UserContext } from '../context/userContext';
 
 const Register = () => {
-    const { setUser } = useContext(CartContext);
+    const { setUser } = useContext(UserContext);
     const navigation = useNavigation();
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);

@@ -1,22 +1,12 @@
 import { Image, View } from 'react-native';
 import { IconButton, Text } from 'react-native-paper';
 import { API_URL } from '@env';
-import * as SecureStore from 'expo-secure-store';
-import { addProductToFavourit } from '../api/favourit';
 import { useContext } from 'react';
-import { CartContext } from '../context/cartContext';
+import { FavouritContext } from '../context/favouriteContext';
 
-const FavouritItem = ({ product, setFavourites, favourites}) => {
-  async function deleteFromFav()
-  {
-    const token = SecureStore.getItem('token');
-    if (token)
-    {
-      const updatedFavourites = favourites.filter(p => p.id !== product.id);
-      setFavourites(updatedFavourites);
-    }
-    addProductToFavourit(token, product.id).catch((error)=>{console.log(error)});
-  }
+const FavouritItem = ({ product }) => {
+  const { deleteFromFavourites } = useContext(FavouritContext);
+
   return (
     <View style={{flexDirection:'row', backgroundColor:'white', marginHorizontal:10, borderRadius:10, justifyContent:'space-between', alignItems:'center'}}>
       <View style={{flexDirection:'row', width:'75%'}}>
@@ -33,7 +23,7 @@ const FavouritItem = ({ product, setFavourites, favourites}) => {
           icon="heart"
           iconColor={"red"}
           size={30}
-          onPress={() => deleteFromFav()}
+          onPress={() => deleteFromFavourites(product)}
         />
       </View>
     </View>

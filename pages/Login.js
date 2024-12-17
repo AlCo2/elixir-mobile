@@ -1,16 +1,14 @@
 import { useNavigation } from '@react-navigation/native';
-import axios from 'axios';
 import React, { useContext, useState } from 'react'
 import { TouchableOpacity, View } from 'react-native';
 import { ActivityIndicator, Button, Text, TextInput } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as SecureStore from 'expo-secure-store';
-import { API_URL } from '@env';
-import { CartContext } from '../context/cartContext';
 import { getAuthUser, login_api } from '../api/auth';
+import { UserContext } from '../context/userContext';
 
 const Login = () => {
-    const { setUser } = useContext(CartContext);
+    const { setUser } = useContext(UserContext);
     const navigation = useNavigation();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');

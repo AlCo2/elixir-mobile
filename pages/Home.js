@@ -7,13 +7,15 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { getFeaturedProducts, getManProducts, getWomanProducts } from "../api/products";
 import { getFavouritProducts } from "../api/favourit";
-import { CartContext } from "../context/cartContext";
 import * as SecureStore from 'expo-secure-store';
-import { isUserExist } from "../utils/isUserExist";
+import { isUserExist } from "../utils/user/isUserExist";
+import { FavouritContext } from "../context/favouriteContext";
+import { UserContext } from "../context/userContext";
 
 const Home = () => {
     const navigation = useNavigation();
-    const { setFavourites, setUser } = useContext(CartContext);
+    const { setUser } = useContext(UserContext);
+    const { setFavourites } = useContext(FavouritContext);
     const [search, setSearch] = useState('');
     const [featured, setFeatured] = useState([]);
     const [manProducts, setManProducts] = useState([]);

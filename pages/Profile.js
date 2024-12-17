@@ -5,11 +5,11 @@ import Login from './Login';
 import { useContext, useEffect, useState } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import { getAuthUser, logout } from '../api/auth';
-import { isUserExist } from '../utils/isUserExist';
-import { CartContext } from '../context/cartContext';
+import { isUserExist } from '../utils/user/isUserExist';
+import { UserContext } from '../context/userContext';
 
 const Profile = () => {
-    const { user, setUser} = useContext(CartContext);
+    const { user, setUser} = useContext(UserContext);
     const [loading, setLoading] = useState(true);
 
     function logoutUser()

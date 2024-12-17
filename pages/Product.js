@@ -8,35 +8,27 @@ import * as SecureStore from 'expo-secure-store';
 import { addProductToFavourit } from '../api/favourit';
 import { useNavigation } from '@react-navigation/native';
 import { showMessage } from 'react-native-flash-message';
+import { FavouritContext } from '../context/favouriteContext';
+import { isAuth } from '../utils/user/isAuth';
 
 const Product = ({route}) => {
   const navigation = useNavigation();
-  const { addToCart, favourites, setFavourites } = useContext(CartContext);
+  const { addToCart } = useContext(CartContext);
+  const { favourites, setFavourites, addToFavourites} = useContext(FavouritContext);
   const { product } = route.params;
   const [isFavourite, setIsFavourite] = useState(false);
 
-  const addToFav = async () =>{
-    const token = SecureStore.getItem('token');
-    if (token)
+  const addToFav = () =>{
+    if (isAuth())
     {
-        if (isFavourite)
-        {
-            const updatedFavourites = favourites.filter(p => p.id !== product.id);
-            setFavourites(updatedFavourites);
-        }
-        else
-        {
-            setFavourites(favourites=>[...favourites, product]);
-        }
-        setIsFavourite(!isFavourite);
+        addToFavourites(product, isFavourite, setIsFavourite)
     }
-    await addProductToFavourit(token, product.id).catch((error)=>{
-        if (error.response.status===401)
-        {
-            navigation.navigate('Login');
-        }
-    });
+    else
+    {
+        navigation.navigate('Login');
+    }
   }
+  
   useEffect(()=>{
     setIsFavourite(favourites.some(p => p.id === product.id))
   }, [favourites])
@@ -72,7 +64,7 @@ const Product = ({route}) => {
       <View style={{margin:20}}>
         <Text variant='titleSmall' style={{opacity:0.6, fontWeight:'bold'}}>Category</Text>
         <View style={{flexDirection:'row', marginTop:5, gap:5}}>
-          <Chip>{product.category.name}</Chip>
+          <Chip>{product.category && product.category.name}</Chip>
         </View>
       </View>
       <View  style={{margin:20, alignItems:'center'}}>

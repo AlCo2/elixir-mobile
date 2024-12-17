@@ -1,14 +1,12 @@
 import { createContext, useState } from "react";
-import { addQToCart } from "../utils/addQToCart";
+import { addQToCart } from "../utils/cart/addQToCart";
 import * as SecureStore from 'expo-secure-store';
-import { deleteFromCart } from "../utils/deleteFromCart";
-import { subtractQFromCart } from "../utils/subtractQFromCart";
+import { deleteFromCart } from "../utils/cart/deleteFromCart";
+import { subtractQFromCart } from "../utils/cart/subtractQFromCart";
 
 export const CartContext = createContext(null);
 
 export const CartProvider = ({children}) => {
-    const [user, setUser] = useState(null);
-    const [favourites, setFavourites] = useState([]);
     const [cartProducts, setCartProducts] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
     const [cartQ, setCartQ] = useState({});
@@ -59,7 +57,7 @@ export const CartProvider = ({children}) => {
         }
     }
     return (
-    <CartContext.Provider value={{cartProducts, setCartProducts, totalPrice, setTotalPrice, cartQ, setCartQ, addToCart, deleteItem, subtractFromCart, user, setUser, favourites, setFavourites}}>
+    <CartContext.Provider value={{cartProducts, setCartProducts, totalPrice, setTotalPrice, cartQ, setCartQ, addToCart, deleteItem, subtractFromCart}}>
         {children}        
     </CartContext.Provider>
 )}

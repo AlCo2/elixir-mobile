@@ -5,9 +5,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { getProductsByName } from "../api/products";
 import * as SecureStore from 'expo-secure-store';
 import { getFavouritProducts } from "../api/favourit";
-import { CartContext } from "../context/cartContext";
 import SelectDropdown from "react-native-select-dropdown";
 import StoreProductCard from "../components/StoreProductCard";
+import { FavouritContext } from "../context/favouriteContext";
 
 const emojisWithIcons = [
     {title: 'Best Match', value: 1},
@@ -18,7 +18,7 @@ const emojisWithIcons = [
 
 const Store = ({ route }) => {
     const { data, value } = route.params;
-    const { favourites, setFavourites } = useContext(CartContext);
+    const { favourites, setFavourites } = useContext(FavouritContext);
     const [sort, setSort] = useState(1);
     const [products, setProducts] = useState([]);
     const [error, setError] = useState(false);

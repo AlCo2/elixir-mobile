@@ -3,25 +3,22 @@ import { ActivityIndicator, Text } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView, TouchableOpacity, View } from 'react-native';
 import FavouritItem from '../components/FavouritItem';
-import { isUserExist } from '../utils/isUserExist';
+import { isUserExist } from '../utils/user/isUserExist';
 import * as SecureStore from 'expo-secure-store';
 import { getAuthUser } from '../api/auth';
 import { useNavigation } from '@react-navigation/native';
-import { CartContext } from '../context/cartContext';
 import { getFavouritProducts } from '../api/favourit';
+import { FavouritContext } from '../context/favouriteContext';
+import { UserContext } from '../context/userContext';
 
 
 const Favourit = () => {
-  const {user, setUser, favourites, setFavourites} = useContext(CartContext);
+  const { user, setUser } = useContext(UserContext);
+  const { favourites, setFavourites } = useContext(FavouritContext);
   const navigation = useNavigation();
-  async function fetchProducts()
+  async function fetchFavouritesProducts()
   {
-    const token = SecureStore.getItem('token');
-    const response = await getFavouritProducts(token)
-    .catch((error)=>
-    {
-      console.log(error);
-    });
+    const response = await getFavouritProducts().catch((error)=>{console.log(error);});
     if (response && response.status == 200)
     {
       setFavourites(response.data);
@@ -37,15 +34,12 @@ const Favourit = () => {
       {
           setUser(response.data);
           SecureStore.setItemAsync('user',JSON.stringify(response.data));
-          fetchProducts();
+          fetchFavouritesProducts();
       }
   }
+  
   useEffect(()=>{
-    if (!isUserExist(setUser))
-    {
-        fetchAuthUser();
-    }else
-      fetchProducts();
+    fetchFavouritesProducts();
   }, [])
 
   if (!user)
