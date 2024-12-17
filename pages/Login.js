@@ -7,6 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import * as SecureStore from 'expo-secure-store';
 import { API_URL } from '@env';
 import { CartContext } from '../context/cartContext';
+import { getAuthUser, login_api } from '../api/auth';
 
 const Login = () => {
     const { setUser } = useContext(CartContext);
@@ -22,15 +23,16 @@ const Login = () => {
             email:email,
             password:password,
         }
-        const response = await axios.post(`${API_URL}/api/login`, data)
+        const response = await login_api(data)
         .catch((error)=>{
             setError(true);
             setLoading(false);
         });
         if (response && response.status == 200)
         {
-            SecureStore.setItemAsync('token', response.data);
-            const user = await axios.get(`${API_URL}/api/user`, {headers: {Authorization: `Bearer ${response.data}`}})
+            const token = response.data;
+            SecureStore.setItemAsync('token', token);
+            const user = await getAuthUser(token)
             .then((response)=>response.data);
             setUser(user);
             setLoading(false);

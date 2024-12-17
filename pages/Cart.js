@@ -66,7 +66,7 @@ const Cart = () => {
                   </View>
                 </View>
                 <View style={{marginRight:20, alignItems:'flex-end'}}>
-                  <Button onPress={()=>fetchProducts()} style={{backgroundColor:'black', borderRadius:100, width:140}} labelStyle={{fontSize:20, paddingVertical:5}} mode='contained'>Pay Now</Button>
+                  <Button onPress={()=>navigation.navigate('Checkout')} style={{backgroundColor:'black', borderRadius:100, width:140}} labelStyle={{fontSize:20, paddingVertical:5}} mode='contained'>Pay Now</Button>
                 </View>
               </>
             :

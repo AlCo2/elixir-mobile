@@ -7,7 +7,7 @@ import * as SecureStore from 'expo-secure-store';
 import { getFavouritProducts } from "../api/favourit";
 import { CartContext } from "../context/cartContext";
 import SelectDropdown from "react-native-select-dropdown";
-import StoreProductCard from "../components/storeProductCard";
+import StoreProductCard from "../components/StoreProductCard";
 
 const emojisWithIcons = [
     {title: 'Best Match', value: 1},

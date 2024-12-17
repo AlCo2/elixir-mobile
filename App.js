@@ -9,6 +9,8 @@ import { CartProvider } from './context/cartContext';
 import Notification from './pages/Notification';
 import Login from './pages/Login';
 import FlashMessage from "react-native-flash-message";
+import Checkout from './pages/Checkout';
+import Success from './pages/Success';
 
 const Stack = createNativeStackNavigator();
 
@@ -25,6 +27,8 @@ export default function App() {
             <Stack.Screen options={{headerTitle:'', headerTransparent:true, headerBackTitleVisible:false}} name="Notification" component={Notification} />
             <Stack.Screen options={{headerTitle:'', headerTransparent:true, headerBackTitleVisible:false}} name="Login" component={Login} />
             <Stack.Screen options={{headerTitle:'', headerTransparent:true, headerBackTitleVisible:false}} name="Register" component={Register} />
+            <Stack.Screen options={{headerTitle:'', headerTransparent:true, headerBackTitleVisible:false}} name="Checkout" component={Checkout} />
+            <Stack.Screen options={{headerShown:false}} name="Success" component={Success} />
           </Stack.Navigator>
         </NavigationContainer>
         <FlashMessage position='top'/>
