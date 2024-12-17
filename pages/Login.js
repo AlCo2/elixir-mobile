@@ -3,12 +3,10 @@ import React, { useContext, useState } from 'react'
 import { TouchableOpacity, View } from 'react-native';
 import { ActivityIndicator, Button, Text, TextInput } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import * as SecureStore from 'expo-secure-store';
-import { getAuthUser, login_api } from '../api/auth';
 import { UserContext } from '../context/userContext';
 
 const Login = () => {
-    const { setUser } = useContext(UserContext);
+    const { auth } = useContext(UserContext);
     const navigation = useNavigation();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -17,34 +15,21 @@ const Login = () => {
     async function login()
     {
         setLoading(true);
-        const data = {
-            email:email,
-            password:password,
-        }
-        const response = await login_api(data)
-        .catch((error)=>{
-            setError(true);
-            setLoading(false);
-        });
-        if (response && response.status == 200)
+        const status = await auth(email, password);
+        if (status == 200)
         {
-            const token = response.data;
-            SecureStore.setItemAsync('token', token);
-            const user = await getAuthUser(token)
-            .then((response)=>response.data);
-            setUser(user);
             setLoading(false);
             navigation.navigate('Home');
         }
+        else
+            setError(true);
         setLoading(false);
     }
     if (loading)
     {
-        return (
-            <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
-                <ActivityIndicator animating={true} size={"large"} style={{width:'100%'}}/>
-            </View>   
-        )
+        return  <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
+                    <ActivityIndicator animating={true} size={"large"} style={{width:'100%'}}/>
+                </View>
     }
   return (
     <SafeAreaView>

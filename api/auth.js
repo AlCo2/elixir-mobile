@@ -1,8 +1,7 @@
 import axios from "axios";
 import { API_URL } from '@env';
 import * as SecureStore from 'expo-secure-store';
-export const getAuthUser = () =>{
-    const token = SecureStore.getItem('token');
+export const getAuthUser = (token) =>{
     return axios.get(`${API_URL}/api/user`, {headers: {Authorization: `Bearer ${token}`}})
 }
 

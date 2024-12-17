@@ -1,10 +1,20 @@
 import { createContext, useState } from "react";
-import { addProductToFavourit } from "../api/favourit";
-
+import { addProductToFavourit, getFavouritProducts } from "../api/favourit";
+import { isAuth } from "../utils/user/isAuth";
 export const FavouritContext = createContext(null);
 
 export const FavouritProvider = ({children}) => {
     const [favourites, setFavourites] = useState([]);
+
+    async function fetchFavourites()
+    {
+        if (isAuth)
+        {
+            const response = await getFavouritProducts();
+            setFavourites(response.data);
+        }
+    }
+    
     function addToFavourites(product, isFavourite, setIsFavourite)
     {
         if (isFavourite)
@@ -27,7 +37,7 @@ export const FavouritProvider = ({children}) => {
     }
 
     return (
-    <FavouritContext.Provider value={{favourites, setFavourites, deleteFromFavourites, addToFavourites}}>
+    <FavouritContext.Provider value={{favourites, setFavourites, deleteFromFavourites, addToFavourites, fetchFavourites}}>
         {children}
     </FavouritContext.Provider>
 )}

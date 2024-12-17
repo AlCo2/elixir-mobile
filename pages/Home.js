@@ -6,16 +6,14 @@ import ProductCard from "../components/ProductCard";
 import { useContext, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { getFeaturedProducts, getManProducts, getWomanProducts } from "../api/products";
-import { getFavouritProducts } from "../api/favourit";
-import * as SecureStore from 'expo-secure-store';
-import { isUserExist } from "../utils/user/isUserExist";
+import { setUserFromJson } from "../utils/user/setUserFromJson";
 import { FavouritContext } from "../context/favouriteContext";
 import { UserContext } from "../context/userContext";
 
 const Home = () => {
     const navigation = useNavigation();
     const { setUser } = useContext(UserContext);
-    const { setFavourites } = useContext(FavouritContext);
+    const { fetchFavourites } = useContext(FavouritContext);
     const [search, setSearch] = useState('');
     const [featured, setFeatured] = useState([]);
     const [manProducts, setManProducts] = useState([]);
@@ -24,13 +22,6 @@ const Home = () => {
     function handleSearch()
     {
         navigation.navigate('Store', {data:'featured', value:search})
-    }
-
-    async function fetchFavourites(){
-        const token = SecureStore.getItem('token');
-        const response = await getFavouritProducts(token);
-        if (response && response.status == 200)
-            setFavourites(response.data);
     }
 
     async function fetchData(){
@@ -44,10 +35,11 @@ const Home = () => {
         if (featuredResponse.status == 200)
             setWomanProducts(womanResponse.data);
     }
+    
     useEffect(()=>{
+        setUserFromJson(setUser);
         fetchFavourites();
         fetchData();
-        isUserExist(setUser);
     }, []);
 
   return (

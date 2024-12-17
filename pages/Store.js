@@ -3,8 +3,6 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import { ActivityIndicator, Button, Icon, Searchbar, Text } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getProductsByName } from "../api/products";
-import * as SecureStore from 'expo-secure-store';
-import { getFavouritProducts } from "../api/favourit";
 import SelectDropdown from "react-native-select-dropdown";
 import StoreProductCard from "../components/StoreProductCard";
 import { FavouritContext } from "../context/favouriteContext";
@@ -14,22 +12,16 @@ const emojisWithIcons = [
     {title: 'Price Low - High', value: 2},
     {title: 'Price High - Low', value: 3},
     {title: 'Latest', value: 4}
-  ];
+];
 
 const Store = ({ route }) => {
     const { data, value } = route.params;
-    const { favourites, setFavourites } = useContext(FavouritContext);
+    const { favourites, fetchFavourites } = useContext(FavouritContext);
     const [sort, setSort] = useState(1);
     const [products, setProducts] = useState([]);
     const [error, setError] = useState(false);
     const [search, setSearch] = useState('');
     const [loading, setLoading] = useState(true);
-    async function fetchFavourites(){
-        const token = SecureStore.getItem('token');
-        const response = await getFavouritProducts(token);
-        if (response && response.status == 200)
-            setFavourites(response.data);
-    }
 
     async function handleSearchByValue()
     {
@@ -54,9 +46,11 @@ const Store = ({ route }) => {
             setProducts(response.data);
         setLoading(false);
     }
-
     useEffect(()=>{
         fetchFavourites();
+    }, [])
+    
+    useEffect(()=>{
         handleSearchByValue();
     }, [sort])
 
