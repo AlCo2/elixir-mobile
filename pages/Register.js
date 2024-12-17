@@ -3,12 +3,10 @@ import React, { useContext, useState } from 'react'
 import { TouchableOpacity, View } from 'react-native';
 import { ActivityIndicator, Button, Text, TextInput } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { getAuthUser, register_api } from '../api/auth';
-import * as SecureStore from 'expo-secure-store';
-import { CartContext } from '../context/cartContext';
+import { UserContext } from '../context/userContext';
 
 const Register = () => {
-    const { setUser } = useContext(CartContext);
+    const { setUser, register } = useContext(UserContext);
     const navigation = useNavigation();
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -32,22 +30,14 @@ const Register = () => {
             password: password,
             password_confirmation: passwordConfirmation
         }
-        const response = await register_api(data)
-        .catch((error)=>{
-            console.log(error);
-            setError(true);
-            setLoading(false);
-        });
-        if (response && response.status == 200)
+        const status = await register(data);
+        if (status == 200)
         {
-            const token = response.data;
-            SecureStore.setItemAsync('token', token);
-            const user = await getAuthUser(token)
-            .then((response)=>response.data);
-            setUser(user);
             setLoading(false);
             navigation.navigate('Home');
         }
+        else
+            setError(true);
         setLoading(false);
     }
     if (loading)

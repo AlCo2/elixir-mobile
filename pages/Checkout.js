@@ -8,9 +8,11 @@ import { fetchCountries_api } from "../api/country";
 import { createOrder } from "../api/order";
 import { useNavigation } from "@react-navigation/native";
 import * as SecureStore from 'expo-secure-store';
+import { UserContext } from "../context/userContext";
 
 const Checkout = () => {
-    const { user, cartProducts, totalPrice, cartQ, setCartQ, setCartProducts} = useContext(CartContext);
+    const { cartProducts, totalPrice, cartQ, setCartQ, setCartProducts} = useContext(CartContext);
+    const { user } = useContext(UserContext);
     const [error, setError] = useState(false);
     const [countries, setCountries] = useState([]);
     const [cities, setCities] = useState([]);
@@ -28,7 +30,7 @@ const Checkout = () => {
     async function fetchCountries(){
         const response = await fetchCountries_api()
         .catch((error)=>{
-            console.log(error);
+            setError(true);
         })
         if (response && response.status == 200)
             setCountries(response.data);
@@ -56,7 +58,7 @@ const Checkout = () => {
         }
         const response = await createOrder(data)
         .catch((error)=>{
-            console.log(error);
+            setError(true);
         })
         if (response && response.status === 200)
         {

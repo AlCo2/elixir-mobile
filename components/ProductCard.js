@@ -4,39 +4,27 @@ import { Image, Pressable, StyleSheet, TouchableOpacity, View } from 'react-nati
 import { Card, IconButton, Text } from 'react-native-paper';
 import { API_URL } from '@env';
 import { CartContext } from '../context/cartContext';
-import * as SecureStore from 'expo-secure-store';
-import { addProductToFavourit } from '../api/favourit';
 import { showMessage } from 'react-native-flash-message';
+import { FavouritContext } from '../context/favouriteContext';
+import { isAuth } from '../utils/user/isAuth';
 
 const ProductCard = ({product}) =>{
     const navigation = useNavigation();
+    const { favourites, addToFavourites } = useContext(FavouritContext);
     const [isFavourite, setIsFavourite] = useState(false);
-    const { addToCart, favourites, setFavourites } = useContext(CartContext);
+    const { addToCart } = useContext(CartContext);
     const getProduct = () =>{
         navigation.navigate('Product', {product:product})
     }
-    
-    const addToFav = async () =>{
-        const token = SecureStore.getItem('token');
-        if (token)
+    const addToFav = () =>{
+        if (isAuth())
         {
-            if (isFavourite)
-            {
-                const updatedFavourites = favourites.filter(p => p.id !== product.id);
-                setFavourites(updatedFavourites);
-            }
-            else
-            {
-                setFavourites(favourites=>[...favourites, product]);
-            }
-            setIsFavourite(!isFavourite);
+            addToFavourites(product, isFavourite, setIsFavourite)
         }
-        await addProductToFavourit(token, product.id).catch((error)=>{
-            if (error.response.status===401)
-            {
-                navigation.navigate('Login');
-            }
-        });
+        else
+        {
+            navigation.navigate('Login');
+        }
     }
 
     useEffect(()=>{

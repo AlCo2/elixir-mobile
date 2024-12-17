@@ -1,54 +1,33 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { ActivityIndicator, Text } from 'react-native-paper';
+import React, { useContext, useEffect } from 'react'
+import { Text } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView, TouchableOpacity, View } from 'react-native';
 import FavouritItem from '../components/FavouritItem';
-import { isUserExist } from '../utils/isUserExist';
-import * as SecureStore from 'expo-secure-store';
-import { getAuthUser } from '../api/auth';
 import { useNavigation } from '@react-navigation/native';
-import { CartContext } from '../context/cartContext';
 import { getFavouritProducts } from '../api/favourit';
+import { FavouritContext } from '../context/favouriteContext';
+import { UserContext } from '../context/userContext';
+import { isAuth } from '../utils/user/isAuth';
 
 
 const Favourit = () => {
-  const {user, setUser, favourites, setFavourites} = useContext(CartContext);
+  const { user } = useContext(UserContext);
+  const { favourites, setFavourites } = useContext(FavouritContext);
   const navigation = useNavigation();
-  async function fetchProducts()
+  async function fetchFavouritesProducts()
   {
-    const token = SecureStore.getItem('token');
-    const response = await getFavouritProducts(token)
-    .catch((error)=>
-    {
-      console.log(error);
-    });
+    const response = await getFavouritProducts().catch((error)=>{console.log(error);});
     if (response && response.status == 200)
     {
       setFavourites(response.data);
     }
   }
-  async function fetchAuthUser(){
-      const token = SecureStore.getItem('token');
-      const response = await getAuthUser(token)
-      .catch((error)=>{
-          setUser(null);
-      });
-      if (response && response.status == 200)
-      {
-          setUser(response.data);
-          SecureStore.setItemAsync('user',JSON.stringify(response.data));
-          fetchProducts();
-      }
-  }
-  useEffect(()=>{
-    if (!isUserExist(setUser))
-    {
-        fetchAuthUser();
-    }else
-      fetchProducts();
-  }, [])
 
-  if (!user)
+  useEffect(()=>{
+    fetchFavouritesProducts();
+  }, [user])
+
+  if (!isAuth())
   {
     return  <SafeAreaView style={{alignItems:'center', justifyContent:'center', height:300, gap:30}}>
               <Text style={{fontSize:18, fontWeight:'bold'}}>Login to add items to your favourites</Text>
